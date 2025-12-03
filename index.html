@@ -1,308 +1,161 @@
-<!DOCTYPE html><html lang='en'><head>
-<meta charset='UTF-8'>
-<title>Proxuma L16.1 – Secure Every Click</title>
-<meta name='viewport' content='width=device-width, initial-scale=1'>
-
-<style>
-body{margin:0;font-family:system-ui;background:#f3f4f8;color:#111}
-header{
-background:radial-gradient(circle at top,#10182f 0,#05060a 60%,#000 100%);
-padding:35px 0;text-align:center;color:#fff
-}
-header h1{margin:0;font-size:2rem;letter-spacing:.22em}
-header p{margin:6px 0 0;letter-spacing:.15em;font-size:.9rem}
-
-main{max-width:900px;margin:0 auto;padding:20px}
-
-.card{
-border:2px solid #d8dcea;
-border-radius:18px;
-padding:22px;
-background:#ffffff;
-transition:0.3s;
-margin-bottom:25px;
-}
-
-.card.neon{
-  background: rgba(0,255,229,0.50);
-  border-color:#00d9c0;
-  box-shadow:0 0 18px #00d9c0,0 0 34px #00d9c0;
-}
-.card.solar{
-  background: rgba(255,190,60,0.50);
-  border-color:#ff9f00;
-  box-shadow:0 0 18px #ff9f00,0 0 32px #ff9f00;
-}
-
-input{
-width:100%;padding:12px;border:1px solid #bbb;border-radius:30px;font-size:1rem
-}
-button{
-margin-top:12px;width:100%;padding:14px;border:none;border-radius:30px;
-background:#345dff;color:#fff;font-size:1rem;font-weight:600;cursor:pointer
-}
-
-.metric{margin-top:22px;padding:15px;border-radius:12px;background:#fafbff;border:1px solid #dde1eb}
-.value{font-size:2.1rem;font-weight:700}
-.safe{color:#2e8b3f}.warn{color:#c58a00}.danger{color:#cc1b2a}
-
-.pill{padding:7px 16px;border-radius:30px;font-size:.85rem;border:1px dashed #bcc;display:inline-block;margin-top:6px}
-.pill.safe{color:#2f7d33;background:#e3f6e5;border-color:#4caf50}
-.pill.warn{color:#a67600;background:#fff4d6;border-color:#ffc400}
-.pill.danger{color:#8f151a;background:#ffe5e7;border-color:#c1272d}
-
-#why{margin-top:15px;line-height:1.5}
-
-video{width:100%;border-radius:14px;margin-top:10px;display:none}
-#qrInput{margin-top:15px}
-.themeButtons{display:flex;gap:10px;margin-bottom:20px;}
-.themeButtons button{flex:1;padding:10px;border:none;border-radius:20px;font-weight:600;cursor:pointer;color:#000;background:#e0e0e0}
-</style>
-
-<script src="https://cdn.jsdelivr.net/npm/jsqr"></script>
-</head><body>
-
-
-<header>
-  <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
-    <div style="width:54px;height:54px;border-radius:16px;border:2px solid #00ffe5;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.45);box-shadow:0 0 12px rgba(0,255,229,0.7);font-weight:800;font-size:1.3rem;letter-spacing:0.08em;">
-      P
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Proxuma</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="theme-light">
+<header id="proxumaHeader">
+    <div class="header-inner">
+        <div class="logo-block">
+            <div class="logo-text">Proxuma</div>
+            <div class="logo-subtitle">Lite · Offline Link Intelligence</div>
+        </div>
+        <nav>
+            <button onclick="showPage('home')">Home</button>
+            <button onclick="showPage('about')">About</button>
+            <button onclick="showPage('scanner')">Scanner</button>
+        </nav>
+        <div class="theme-toggle">
+            <label class="switch">
+                <input type="checkbox" id="themeToggle" onchange="toggleTheme()">
+                <span class="slider"></span>
+            </label>
+            <span id="themeLabel">Light Mode</span>
+        </div>
     </div>
-    <div style="text-align:center;">
-      <h1 style="margin:4px 0 0;font-size:2rem;letter-spacing:0.24em;">PROXUMA</h1>
-      <p style="margin:6px 0 0;letter-spacing:0.16em;font-size:0.9rem;">SECURE EVERY CLICK</p>
-      
-    </div>
-  </div>
 </header>
 
-
 <main>
+    <section id="home" class="page-section">
+        <h1>Welcome to Proxuma</h1>
+        <p class="lead">
+            A private, offline security tool that analyzes suspicious links
+            <strong>without sending anything to the internet.</strong>
+        </p>
+        <p>
+            Every scan happens locally on your device. Nothing is stored.
+            Nothing is shared. Nothing leaves your browser.
+        </p>
+        <ul class="feature-list">
+            <li>Detects hidden redirects and obfuscated payloads</li>
+            <li>Flags look-alike and punycode domains</li>
+            <li>Highlights phishing-style login pages</li>
+            <li>Evaluates risk across multiple categories</li>
+        </ul>
+        <p>
+            No accounts. No tracking. No cloud. Just a focused security brain
+            running entirely on your device.
+        </p>
+        <p class="cta">
+            Go to the <button class="inline-link" onclick="showPage('scanner')">Scanner</button>
+            to analyze a link now.
+        </p>
+    </section>
 
-<div class="themeButtons">
-<button onclick="setTheme('default')">Default</button>
-<button onclick="setTheme('neon')">Neon</button>
-<button onclick="setTheme('solar')">Solar</button>
-</div>
+    <section id="about" class="page-section" style="display:none;">
+        <h1>About Proxuma Lite</h1>
+        <p>
+            Proxuma Lite is a zero-cloud, zero-tracking, fully offline security scanner
+            designed for people who value both safety and privacy.
+        </p>
+        <h2>How It Works</h2>
+        <p>
+            Proxuma extracts and analyzes the structure of a URL using a local intelligence engine that includes:
+        </p>
+        <ul class="feature-list">
+            <li>Heuristic scoring and signature matching</li>
+            <li>Behavioral pattern detection and threat archetype classification</li>
+            <li>Offline reasoning logic with confidence scoring</li>
+            <li>Explainable results with human-readable summaries</li>
+        </ul>
+        <p>
+            It evaluates the domain, protocol, path, redirect behavior, encoding patterns,
+            and hidden intent signals, then produces a clear verdict such as:
+            <em>Safe, Low Risk, Medium Risk, High Risk, Dangerous, or Critical Threat.</em>
+        </p>
+        <h2>No Data Leaves Your Device</h2>
+        <p>Proxuma Lite does not:</p>
+        <ul class="feature-list">
+            <li>Send URLs to a server</li>
+            <li>Log your scans or store history</li>
+            <li>Collect identities or analytics</li>
+            <li>Build profiles or share data</li>
+        </ul>
+        <p>
+            Everything runs inside your browser, privately and quietly. Proxuma Lite gives you
+            the intelligence of a modern threat engine without the surveillance of one.
+        </p>
+        <p><strong>You own your safety. You own your data. Proxuma Lite keeps it that way.</strong></p>
+    </section>
 
-<div id="card1" class='card'>
-<h2>URL Analyzer</h2>
-<p>Enter any link or scan a QR code below.</p>
-<input id='u' placeholder='https://example.com'>
-<button onclick='scanURL()'>Analyze Link</button>
+    <section id="scanner" class="page-section" style="display:none;">
+        <h1>Proxuma Scanner</h1>
+        <p class="lead">
+            Paste a link below. Analysis runs locally in your browser.
+            Proxuma does not send or store your URLs.
+        </p>
+        <div class="scanner-input-row">
+            <input
+                type="text"
+                id="scanInput"
+                placeholder="https://example.com/suspicious-link"
+                autocomplete="off"
+            />
+            <button id="scanButton" onclick="runScan()">Scan URL</button>
+        </div>
+        <div class="scanner-helper-row">
+            <button type="button" class="secondary-button" onclick="copyLastURL()">
+                Copy current URL
+            </button>
+        </div>
+        <div class="qr-section">
+            <div class="qr-header">
+                <span class="field-label">Or scan a QR code:</span>
+                <button id="qrToggleButton" class="secondary-button" onclick="toggleQrPanel()">Show QR scanner</button>
+            </div>
+            <div id="qrPanel" class="qr-panel" style="display:none;">
+                <p class="qr-note">
+                    Proxuma will use your camera directly in this browser tab to read a QR code.
+                    Video never leaves your device.
+                </p>
+                <div class="qr-layout">
+                    <div class="qr-video-block">
+                        <div class="qr-video-frame">
+                            <video id="qrVideo" autoplay playsinline></video>
+                            <div id="qrOverlay" class="qr-overlay">Align a QR code in the frame.</div>
+                        </div>
+                        <div class="qr-controls">
+                            <button id="qrStartButton" onclick="startQrScan()">Start camera</button>
+                            <button id="qrStopButton" onclick="stopQrScan()" disabled>Stop</button>
+                        </div>
+                        <p id="qrStatus" class="qr-status">QR scanner idle.</p>
+                    </div>
+                    <div class="qr-side">
+                        <label for="qrDecoded" class="field-label">Decoded link</label>
+                        <input id="qrDecoded" class="qr-input" type="text" readonly placeholder="QR link will appear here..." />
+                        <button id="qrAnalyzeButton" onclick="analyzeDecoded()" disabled>Analyze decoded link</button>
+                        <p class="qr-note small">No camera? Upload a QR image instead:</p>
+                        <input type="file" id="qrFileInput" accept="image/*" onchange="handleQrFile(this.files)" />
+                    </div>
+                </div>
+            </div>
+        </div>
 
-<div class='metric'><div>Threat Score</div><div id='score' class='value'>--</div></div>
-<div class='metric'><div>Risk Category</div><div id='cat' class='pill'>Awaiting</div></div>
-<div class='metric'><div>Domain Signal</div><div id='age' class='pill'>Not checked</div></div>
-<div id='why'>Enter a link above to see Proxuma’s assessment.</div>
-</div>
-
-<div id="card2" class='card'>
-<h2>QR Code Scanner</h2>
-<p>Choose scanning method:</p>
-
-<button onclick='startQR()'>Start Live Scanner</button>
-<video id='cam'></video>
-
-<p style='margin-top:15px;font-weight:600;'>OR upload a photo / use camera:</p>
-<input id="qrInput" type="file" accept="image/*" capture="environment" onchange="scanQRPhoto(event)">
-</div>
 
 
-<section style="margin-top:30px;padding:18px 20px;border-radius:18px;border:1px solid #dde1eb;background:#f7f8ff;">
-  <h3 style="margin-top:0;margin-bottom:8px;font-size:1.05rem;">About Proxuma Lite</h3>
-  <p style="margin:0 0 10px;line-height:1.55;font-size:0.95rem;">
-    Proxuma Lite provides on-device threat evaluation for URLs and QR codes, helping you avoid phishing pages,
-    fake storefronts, and malicious redirects. All checks run locally in your browser: no links are uploaded,
-    logged, or sent to any server.
-  </p>
-  <p style="margin:0;font-size:0.9rem;opacity:0.85;">
-    This experimental build is designed for personal use and education. Always use your judgment and follow guidance
-    from your bank, telecom provider, or local authorities when dealing with suspicious messages or payment requests.
-  </p>
-</section>
-
-
+        <div id="scanCard" class="scan-card scan-card-empty">
+            <p class="empty-text">Scan a URL to see the analysis here.</p>
+        </div>
+    </section>
 </main>
 
-<script>
-let stream=null;
 
-function setTheme(theme){
-let cards=document.querySelectorAll('.card');
-cards.forEach(c=>c.className='card');
-if(theme==='neon') cards.forEach(c=>c.classList.add('neon'));
-if(theme==='solar') cards.forEach(c=>c.classList.add('solar'));
-}
+<canvas id="qrCanvas" width="640" height="480" style="display:none;"></canvas>
 
-function estimateDomainSignal(host){
-let age=document.getElementById('age');
-let parts=host.split('.');
-if(parts.length>2) parts=parts.slice(parts.length-2);
-let root=parts.join('.');
-let name=parts[0];
-let tld=parts[parts.length-1];
-
-const legacy=["google.com","rbc.com","amazon.com","microsoft.com","facebook.com","apple.com","youtube.com","yahoo.com"];
-
-if(legacy.includes(root)){
- age.textContent="Likely 10+ years (legacy domain)";
- age.className="pill safe"; return "legacy";
-}
-
-const oldTLD=["com","net","org","ca","gov","mil","edu"];
-const newRisk=["xyz","top","buzz","gq","ml","cf","tk","club","click"];
-let digit=/\d/.test(name), hyph=/-/.test(name);
-
-if(newRisk.includes(tld)||digit||hyph){
- age.textContent="Possibly new / untrusted pattern";
- age.className="pill warn"; return "newish";
-}
-
-if(oldTLD.includes(tld)&&!digit&&!hyph){
- age.textContent="Likely established domain";
- age.className="pill safe"; return "established";
-}
-
-age.textContent="Unknown (WHOIS upgrade pending)";
-age.className="pill"; return "unknown";
-}
-
-function scanURL(){
-let raw=document.getElementById('u').value.trim();
-let score=document.getElementById('score'),
-    cat=document.getElementById('cat'),
-    why=document.getElementById('why'),
-    age=document.getElementById('age');
-
-if(!raw){
- score.textContent='--';
- cat.textContent='No URL';
- age.textContent='Not checked';
- age.className='pill';
- return;
-}
-
-let url=raw;
-if(!/^https?:\/\//i.test(url)) url="https://"+url;
-
-let u;
-try{ u=new URL(url); }
-catch{
- score.textContent=90; score.className="value danger";
- cat.textContent="Invalid"; cat.className="pill danger";
- age.textContent="Invalid host"; age.className="pill danger";
- why.innerHTML="Malformed or unsafe URL."; return;
-}
-
-let val=0, flags=[];
-if(u.protocol!=="https:"){ val+=35; flags.push("Not using HTTPS"); }
-if(/^\d{1,3}(?:\.\d{1,3}){3}$/.test(u.hostname)){ val+=30; flags.push("Raw IP host"); }
-
-let tld=u.hostname.split('.').pop();
-let bad=["top","xyz","buzz","gq","ml","cf","tk","cn","ru","click"];
-if(bad.includes(tld)){ val+=25; flags.push("Suspicious TLD: "+tld); }
-
-let full=url.toLowerCase();
-if(full.length>140){ val+=20; flags.push("URL extremely long"); }
-if(/%[0-9a-f]{2}/.test(full)){ val+=12; flags.push("Encoded characters"); }
-if(full.includes('@')){ val+=25; flags.push("'@' redirection trick"); }
-if(u.hostname.startsWith("xn--")){ val+=35; flags.push("Homoglyph (punycode) domain"); }
-
-let kw=["login","verify","wallet","refund","secure","bank","invoice","irs","cra","unlock","password","update","confirm"];
-let hits=kw.filter(w=>full.includes(w)).length;
-if(hits){ val+=hits*10; flags.push("Sensitive keywords"); }
-
-if(/\/(secure|verify|login|update|gift|promo|claim)\//i.test(full)){
- val+=18; flags.push("Suspicious path pattern");
-}
-
-let signal=estimateDomainSignal(u.hostname);
-if(signal==="newish"){ val+=10; flags.push("Domain style indicates newer profile"); }
-
-if(val>100) val=100;
-
-let state="Safe", cls="safe";
-if(val>=65){ state="Malicious"; cls="danger"; }
-else if(val>=30){ state="Suspicious"; cls="warn"; }
-
-score.textContent=val; score.className="value "+cls;
-cat.textContent=state; cat.className="pill "+cls;
-why.innerHTML="<strong>Why:</strong><br>"+(flags.length?flags.join("<br>"):"No major red flags.");
-
-}
-
-function startQR(){
-let video=document.getElementById('cam');
-navigator.mediaDevices.getUserMedia({video:{facingMode:"environment"}})
-.then(s=>{
- stream=s;
- video.srcObject=s;
- video.style.display='block';
- video.setAttribute('playsinline',true);
- video.play();
- tick();
-})
-.catch(e=>{
- alert("Camera unavailable. Use the photo upload option below.");
-});
-}
-
-function stopQR(){
-if(stream){ stream.getTracks().forEach(t=>t.stop()); }
-document.getElementById('cam').style.display='none';
-}
-
-function tick(){
-let video=document.getElementById('cam');
-if(video.readyState===video.HAVE_ENOUGH_DATA){
- let c=document.createElement('canvas');
- c.width=video.videoWidth; c.height=video.videoHeight;
- let ctx=c.getContext('2d');
- ctx.drawImage(video,0,0,c.width,c.height);
- let img=ctx.getImageData(0,0,c.width,c.height);
- let code=jsQR(img.data,c.width,c.height);
- if(code){
-   document.getElementById('u').value=code.data;
-   stopQR();
-   scanURL();
-   return;
- }
-}
-requestAnimationFrame(tick);
-}
-
-function scanQRPhoto(ev){
-let file=ev.target.files[0];
-if(!file) return;
-let reader=new FileReader();
-reader.onload=function(){
- let img=new Image();
- img.onload=function(){
-   let c=document.createElement('canvas');
-   c.width=img.width; c.height=img.height;
-   let ctx=c.getContext('2d');
-   ctx.drawImage(img,0,0);
-   let data=ctx.getImageData(0,0,c.width,c.height);
-   let code=jsQR(data.data,c.width,c.height);
-   if(code){
-     document.getElementById('u').value=code.data;
-     scanURL();
-   } else {
-     alert("No QR code found in the image.");
-   }
- };
- img.src=reader.result;
-};
-reader.readAsDataURL(file);
-}
-</script>
-
-
-<footer style="margin-top:30px;padding:18px 0 24px;text-align:center;font-size:0.8rem;color:#555;background:#f0f2fa;border-top:1px solid #d6dae8;">
-  <div>© 2025 Proxuma &mdash; All Rights Reserved</div>
-  <div style="margin-top:4px;opacity:0.85;">Version 1.0 &mdash; Lite Edition</div>
-</footer>
-
-
-</body></html>
+<script src="proxuma.security.js"></script>
+<script src="proxuma.ui.js"></script>
+</body>
+</html>
