@@ -668,3 +668,25 @@ body.theme-dark #qrToggleButton {
     color: #000 !important;
     border-color: #00ff99 !important;
 }
+
+/* ACTIVE NAV HIGHLIGHT */
+nav button.nav-button.active-nav {
+    background: #111111;
+    color: #ffffff;
+}
+
+body.theme-dark nav button.nav-button.active-nav {
+    background: #00ff66;
+    color: #000000;
+    box-shadow: 0 0 10px #00ff66;
+}
+
+/* Larger QR Start/Stop buttons for mobile friendliness */
+#qrStartButton,
+#qrStopButton {
+    padding: 14px 18px;
+    font-size: 1rem;
+    border-radius: 999px;
+    font-weight: 600;
+}
+

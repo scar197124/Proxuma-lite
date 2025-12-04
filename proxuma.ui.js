@@ -13,6 +13,17 @@
       const el = document.getElementById(id);
       if (el) el.style.display = id === pageId ? "block" : "none";
     });
+
+    // Update nav highlight so users can see which section is active
+    const navButtons = document.querySelectorAll("nav button.nav-button");
+    navButtons.forEach((btn) => {
+      const target = btn.getAttribute("data-page");
+      if (target === pageId) {
+        btn.classList.add("active-nav");
+      } else {
+        btn.classList.remove("active-nav");
+      }
+    });
   }
   window.showPage = showPage;
 
