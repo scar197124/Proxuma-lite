@@ -14,20 +14,20 @@ Proxuma Lite is a **privacy-first URL and QR analysis tool**. It runs entirely i
 - 🧠 **Phishing & Scam Detection Signals**  
   Identifies patterns commonly found in phishing pages, credential harvesting flows, fake login portals, and prize/lottery scams.
 
-- 🧬 **Brand Impersonation & Look‑alike Domains**  
+- 🧬 **Brand Impersonation & Look-alike Domains**  
   Flags punycode, homograph tricks, mixed alphabets, and domains that visually resemble major brands.
 
 - 🧩 **Redirect & Shortener Awareness**  
   Detects redirect parameters, hidden destinations, URL shorteners, and attempts to conceal the final landing page.
 
-- 🧾 **Structured Findings + Human‑Readable Verdict**  
+- 🧾 **Structured Findings + Human-Readable Verdict**  
   Every scan produces a summary, verdict, detailed findings, and suggestions written in plain language.
 
-- 📷 **Local QR Scanner (Browser‑Native)**  
+- 📷 **Local QR Scanner (Browser-Native)**  
   Uses the browser’s `BarcodeDetector` API (where supported) to decode QR codes locally. You can scan via camera or upload a QR image, then analyze the decoded URL with the same engine.
 
 - 🌓 **Light / Dark Neon UI**  
-  Clean, responsive layout designed for both desktop and mobile, with a neon‑accent dark mode and a neutral light mode.
+  Clean, responsive layout designed for both desktop and mobile, with a neon-accent dark mode and a neutral light mode.
 
 ---
 
@@ -35,33 +35,33 @@ Proxuma Lite is a **privacy-first URL and QR analysis tool**. It runs entirely i
 
 The **Proxuma Security Engine – Heuristic v10** performs structural and behavioral analysis of a URL, including:
 
-- Protocol checks (`http`, `https`, and non‑standard schemes)  
+- Protocol checks (`http`, `https`, and non-standard schemes)  
 - Domain and TLD heuristics, including suspicious TLDs and bare IPs  
-- Punycode, non‑ASCII, and mixed Latin/Cyrillic detection  
+- Punycode, non-ASCII, and mixed Latin/Cyrillic detection  
 - Login, payment, and verification keyword detection in paths and queries  
-- Dangerous file extensions and double‑extension patterns (e.g. `.pdf.exe`)  
-- Percent‑encoding and obfuscation density  
-- Redirect parameters and base64‑encoded redirect targets  
-- Entropy analysis for auto‑generated or random‑looking URLs  
+- Dangerous file extensions and double-extension patterns (e.g. `.pdf.exe`)  
+- Percent-encoding and obfuscation density  
+- Redirect parameters and base64-encoded redirect targets  
+- Entropy analysis for auto-generated or random-looking URLs  
 - Clustered threat signals (phishing, malware delivery, redirect cloaking, etc.)
 
 The engine does **not** execute any remote code or external network lookups. All analysis is done through static inspection of the URL string.
 
 ---
 
-## AI‑Assisted Validation
+## AI-Assisted Validation
 
-To help ensure the engine behaves consistently and safely, Proxuma Lite has been evaluated using **independent AI‑based analysis models**. These models were used to:
+To help ensure the engine behaves consistently and safely, Proxuma Lite has been evaluated using **independent AI-based analysis models**. These models were used to:
 
-- Cross‑check that the engine’s logic is **non‑malicious and self‑contained**  
+- Cross-check that the engine’s logic is **non-malicious and self-contained**  
 - Validate that **no external network calls** are made during scanning  
-- Stress‑test a wide range of benign and malicious URLs to verify that risk scores and verdicts behave in a **stable, explainable way**
+- Stress-test a wide range of benign and malicious URLs to verify that risk scores and verdicts behave in a **stable, explainable way**
 
-This AI‑assisted validation is not a formal certification, but it is an additional layer of assurance that:
+This AI-assisted validation is not a formal certification, but it is an additional layer of assurance that:
 
 - The engine is focused on **defensive analysis only**  
 - The risk model stays within **clear, documented safety boundaries**  
-- The tool is suitable for offline, privacy‑respecting use
+- The tool is suitable for offline, privacy-respecting use
 
 ---
 
@@ -94,7 +94,7 @@ If your browser does not support `BarcodeDetector`, the app will show a clear me
 ## Getting Started
 
 1. **Download or clone** this repository.  
-2. Open `index.html` in a modern browser (Chrome, Edge, Firefox, or a Chromium‑based browser).  
+2. Open `index.html` in a modern browser (Chrome, Edge, Firefox, or a Chromium-based browser).  
 3. Paste a URL into the scanner input on the **Scanner** page.  
 4. Click **Analyze** to get a risk score, findings, and verdict.  
 5. (Optional) Open the **QR scanner**, point it at a QR code, and analyze the decoded link.
@@ -122,12 +122,12 @@ Proxuma Lite is **not**:
 - A network traffic inspector  
 - A replacement for endpoint protection
 
-It is a **link‑intelligence helper**: a way to get a structured, understandable second opinion *before* you decide to trust or open a link.
+It is a **link-intelligence helper**: a way to get a structured, understandable second opinion *before* you decide to trust or open a link.
 
 Always combine Proxuma Lite with:
 
-- Up‑to‑date browser and operating system  
-- Device‑level security controls  
+- Up-to-date browser and operating system  
+- Device-level security controls  
 - Healthy skepticism about unexpected or urgent messages
 
 ---

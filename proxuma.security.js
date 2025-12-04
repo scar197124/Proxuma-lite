@@ -408,6 +408,16 @@
         findings.push("Hostname mixes Latin and Cyrillic characters, a strong indicator of homograph-style attacks.");
       }
 
+      // Strict detection for suspicious "www" prefix without a dot (e.g. wwwpaypal.com, wwwnationnews.com)
+      if (/^www[a-zA-Z0-9]/.test(hostname) && !hostname.startsWith("www.")) {
+        categories.domain += 14;
+        risk += 22;
+        signalCount++;
+        threatFlags.phishing = true;
+        findings.push("Hostname begins with 'www' but is missing a dot after the prefix. Suspicious WWW prefix — possible impersonation.");
+        explanation.push("Hostname starts with an attached 'www' prefix (e.g. 'wwwpaypal.com'), which is a common phishing pattern: missing dot after 'www' and visual impersonation of trusted domains.");
+      }
+
       const subCount = hostname.split(".").length - 1;
       if (subCount >= 3) {
         categories.domain += 8;
