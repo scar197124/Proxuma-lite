@@ -173,7 +173,21 @@
       entropy +
       "\n" +
       "Engine: " +
-      escapeHtml((result && result.engineLabel) || "Proxuma Security Engine – Heuristic v14.1");
+      escapeHtml((result && result.engineLabel) || "Proxuma Security Engine – Heuristic v14.1")
+
+    const shieldHtml =
+      '<div class="shield-panel">' +
+      '<div class="shield-panel-header">' +
+      '<div class="shield-panel-title">Proxuma Shield · Local Threat Posture</div>' +
+      '<div class="shield-panel-badge ' +
+      badgeClass +
+      '">Shield status: ' +
+      riskLabel +
+      "</div>" +
+      "</div>" +
+      '<p class="shield-panel-copy">Shield Stage 1 is running in Lite preview mode. This view mirrors the analysis above and is computed entirely on your device.</p>' +
+      "</div>";
+;
 
     const html =
       "<div class=\"risk-badge " +
@@ -217,6 +231,7 @@
       encodingRisk +
       "/20</div>" +
       "</div>" +
+      shieldHtml +
       "<h3>Findings</h3>" +
       findingsHtml +
       (suggestionsHtml
@@ -325,8 +340,27 @@
       qrDetector = qrDetector || new window.BarcodeDetector({ formats: ["qr_code"] });
       return true;
     }
-    updateQrStatus("QR scanning not supported in this browser. You can still upload an image.");
+    updateQrStatus("QR scanning is not supported in this browser. You can still paste or type a link above. For camera scanning, try a recent Chrome, Edge, Firefox, or mobile browser.");
     return false;
+  }
+
+
+
+  async function getCameraStream() {
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      updateQrStatus("Camera access is not available in this browser. You can still upload an image or paste a link.");
+      throw new Error("getUserMedia not supported");
+    }
+
+    const primary = { video: { facingMode: { ideal: "environment" } } };
+    const fallback = { video: true };
+
+    try {
+      return await navigator.mediaDevices.getUserMedia(primary);
+    } catch (err) {
+      console.warn("Primary camera constraints failed, falling back to generic video:", err);
+      return await navigator.mediaDevices.getUserMedia(fallback);
+    }
   }
 
   async function startQrScan() {
@@ -342,7 +376,7 @@
     if (!supported) return;
 
     try {
-      qrStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
+      qrStream = await getCameraStream();
       video.srcObject = qrStream;
       qrScanning = true;
       if (overlay) overlay.style.opacity = "1";
