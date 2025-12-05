@@ -668,3 +668,21 @@ body.theme-dark #qrToggleButton {
     color: #000 !important;
     border-color: #00ff99 !important;
 }
+
+
+
+/* Fix for long URLs in Technical Details panel */
+#technical-details,
+.tech-details,
+.tech-output,
+.techbox,
+pre.tech,
+pre.technical,
+.technical-area {
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    word-break: break-all;
+    max-width: 100%;
+    overflow-x: auto;
+    display: block;
+}
