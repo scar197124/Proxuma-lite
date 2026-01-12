@@ -1,4 +1,4 @@
-// Proxuma Security Engine – Heuristic v10
+// Proxuma Security Engine – Heuristic v10.1
 // v10: structural + behavioral + contextual heuristics with guardrails and complexity checks.
 
 ;(function (global) {
@@ -316,6 +316,7 @@
     }
 
     const protocol = (parsed.protocol || "").replace(":", "").toLowerCase();
+    const isLocalFile = protocol === "file";
     const hostname = (parsed.hostname || "").toLowerCase();
     const pathname = parsed.pathname || "";
     const search = parsed.search || "";
@@ -335,6 +336,14 @@
       signalCount++;
       findings.push("Connection is not using HTTPS (http).");
       suggestions.push("Avoid entering credentials or sensitive data on HTTP pages.");
+    } else if (protocol === "file") {
+      // Local file URLs are environmentally sensitive but not inherently "malicious"
+      categories.protocol += 14;
+      risk += 18;
+      signalCount++;
+      findings.push("Local file link detected (file://). This is sensitive because it can reference files on a device.");
+      suggestions.push("Only open local file links if you trust the source and understand what file is being opened.");
+      explanation.push("Context: local-file. Risk reflects environmental sensitivity, not a network-borne threat.");
     } else if (SUSPICIOUS_PROTOCOLS.includes(protocol)) {
       categories.protocol += 22;
       risk += 32;
@@ -727,7 +736,7 @@
       hardCritical = true;
       explanation.push("Executable or double extension combined with other risk factors triggers a critical kill-switch.");
     }
-    if (SUSPICIOUS_PROTOCOLS.includes(protocol)) {
+    if (SUSPICIOUS_PROTOCOLS.includes(protocol) && !isLocalFile) {
       hardCritical = true;
     }
     if (looksLikeIp(hostname) && hasLoginKeyword) {
@@ -746,6 +755,20 @@
     let intentType = "General Navigation";
     let summary = "No strong malicious pattern detected. Still exercise normal caution when visiting unknown links.";
     let verdict = "Safe to open in most cases, but always double-check the context and sender.";
+
+    // Local file context handling: distinguish environmental sensitivity from network threats
+    if (isLocalFile) {
+      threatType = "Local File Link";
+      intentType = "Local Resource Access";
+      summary = "This is a local file URL (file://). These links can reference files on a device. Risk here reflects environmental sensitivity, not a network-borne threat.";
+      verdict = "Only open local file links if you trust the source and know what file is being opened.";
+
+      // Cap score unless there are strong executable/double-extension signals
+      if (!hardCritical && !dangerousExt && !doubleExt) {
+        if (riskScore > 50) riskScore = 50;
+      }
+    }
+
 
     if (riskScore <= 10) {
       summary = "URL appears low-risk based on structural analysis. This does not guarantee safety; always verify context.";

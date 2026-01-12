@@ -686,3 +686,65 @@ pre.technical,
     overflow-x: auto;
     display: block;
 }
+
+
+/* === BOXED CONTENT: HOME + ABOUT === */
+.page-section {
+    padding: 22px 24px;
+    border-radius: 14px;
+    margin-top: 20px;
+    position: relative;
+}
+
+/* LIGHT THEME — white + black border */
+body.theme-light .page-section {
+    background: #ffffff;
+    border: 2px solid #111;
+    box-shadow: none;
+}
+
+/* DARK THEME — black + neon green */
+body.theme-dark .page-section {
+    background: #050505;
+    border: 2px solid #00ff66;
+    box-shadow:
+        0 0 0 1px rgba(0, 255, 102, 0.25),
+        0 0 14px rgba(0, 255, 102, 0.25);
+}
+
+/* === HUD CORNER BRACKETS === */
+.page-section::before,
+.page-section::after {
+    content: "";
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    pointer-events: none;
+}
+
+.page-section::before {
+    top: -2px;
+    left: -2px;
+    border-top: 2px solid;
+    border-left: 2px solid;
+}
+
+.page-section::after {
+    bottom: -2px;
+    right: -2px;
+    border-bottom: 2px solid;
+    border-right: 2px solid;
+}
+
+/* LIGHT THEME — black brackets */
+body.theme-light .page-section::before,
+body.theme-light .page-section::after {
+    border-color: #111;
+}
+
+/* DARK THEME — neon green brackets */
+body.theme-dark .page-section::before,
+body.theme-dark .page-section::after {
+    border-color: #00ff66;
+    box-shadow: 0 0 6px rgba(0, 255, 102, 0.6);
+}

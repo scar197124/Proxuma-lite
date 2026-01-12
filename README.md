@@ -33,9 +33,10 @@ Proxuma Lite is a **privacy-first URL and QR analysis tool**. It runs entirely i
 
 ## Engine Overview
 
-The **Proxuma Security Engine – Heuristic v10** performs structural and behavioral analysis of a URL, including:
+The **Proxuma Security Engine – Heuristic v10.1** performs structural and behavioral analysis of a URL, including:
 
 - Protocol checks (`http`, `https`, and non-standard schemes)  
+- Local context detection for `file://` URLs to separate environmental sensitivity from network-borne threats  
 - Domain and TLD heuristics, including suspicious TLDs and bare IPs  
 - Punycode, non-ASCII, and mixed Latin/Cyrillic detection  
 - Login, payment, and verification keyword detection in paths and queries  
