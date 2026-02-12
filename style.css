@@ -748,3 +748,86 @@ body.theme-dark .page-section::after {
     border-color: #00ff66;
     box-shadow: 0 0 6px rgba(0, 255, 102, 0.6);
 }
+
+
+/* ===== Header Structural Lock ===== */
+.header-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+
+.proxuma-row {
+    display: flex;
+    justify-content: center;
+}
+
+.nav-row {
+    display: flex;
+    gap: 0px; /* touching like Shield */
+}
+
+.nav-row button,
+.core-button {
+    padding: 8px 22px;
+    border-radius: 999px;
+    border: 2px solid currentColor;
+    background: inherit;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+
+
+/* ===== Shield Theme Toggle ===== */
+.theme-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 46px;
+    height: 24px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    inset: 0;
+    background-color: #000;
+    border: 2px solid #00ff66;
+    border-radius: 999px;
+    transition: 0.3s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 2px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    transition: 0.3s;
+}
+
+input:checked + .slider {
+    background-color: #ffffff;
+}
+
+input:checked + .slider:before {
+    transform: translateX(20px);
+    background-color: #000000;
+}
+
