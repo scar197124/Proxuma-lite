@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Proxuma</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="theme-light">
+<header id="proxumaHeader">
+    <div class="header-inner">
+        <div class="logo-block">
+            <div class="logo-text">Proxuma</div>
+            <div class="logo-subtitle">Lite · Offline Link Intelligence</div>
+        </div>
+        
+<nav class="header-center">
+    <div class="proxuma-row">
+        <button class="core-button" onclick="window.location.href='https://scar197124.github.io/PROXUMA/'">
+            Proxuma
+        </button>
+    </div>
+    <div class="nav-row">
+        <button onclick="showPage('home')">Home</button>
+        <button onclick="showPage('about')">About</button>
+        <button onclick="showPage('scanner')">Scanner</button>
+    </div>
+</nav>
+
+        
+<div class="theme-toggle">
+    <label class="switch">
+        <input type="checkbox" id="themeToggle" onchange="toggleTheme()">
+        <span class="slider"></span>
+    </label>
+</div>
+
+    </div>
+</header>
+
+<main>
+    <section id="home" class="page-section">
+        <h1>Welcome to Proxuma</h1>
+        <p class="lead">
+            A private, offline security tool that analyzes suspicious links
+            <strong>without sending anything to the internet.</strong>
+        </p>
+        <p>
+            Every scan happens locally on your device. Nothing is stored.
+            Nothing is shared. Nothing leaves your browser.
+        </p>
+        <ul class="feature-list">
+            <li>Detects hidden redirects and obfuscated payloads</li>
+            <li>Flags look-alike and punycode domains</li>
+            <li>Highlights phishing-style login pages</li>
+            <li>Evaluates risk across multiple categories</li>
+        </ul>
+        <p>
+            No accounts. No tracking. No cloud. Just a focused security brain
+            running entirely on your device.
+        </p>
+        <p class="cta">
+            Go to the <button class="inline-link" onclick="showPage('scanner')">Scanner</button>
+            to analyze a link now.
+        </p>
+    </section>
+
+    <section id="about" class="page-section" style="display:none;">
+        <h1>About Proxuma Lite</h1>
+        <p>
+            Proxuma Lite is a zero-cloud, zero-tracking, fully offline security scanner
+            designed for people who value both safety and privacy.
+        </p>
+        <h2>How It Works</h2>
+        <p>
+            Proxuma extracts and analyzes the structure of a URL using a local intelligence engine that includes:
+        </p>
+        <ul class="feature-list">
+            <li>Heuristic scoring and signature matching</li>
+            <li>Behavioral pattern detection and threat archetype classification</li>
+            <li>Offline reasoning logic with confidence scoring</li>
+            <li>Explainable results with human-readable summaries</li>
+        </ul>
+        <p>
+            It evaluates the domain, protocol, path, redirect behavior, encoding patterns,
+            and hidden intent signals, then produces a clear verdict such as:
+            <em>Safe, Low Risk, Medium Risk, High Risk, Dangerous, or Critical Threat.</em>
+        </p>
+        <h2>No Data Leaves Your Device</h2>
+        <p>Proxuma Lite does not:</p>
+        <ul class="feature-list">
+            <li>Send URLs to a server</li>
+            <li>Log your scans or store history</li>
+            <li>Collect identities or analytics</li>
+            <li>Build profiles or share data</li>
+        </ul>
+        <p>
+            Everything runs inside your browser, privately and quietly. Proxuma Lite gives you
+            the intelligence of a modern threat engine without the surveillance of one.
+        </p>
+        <p><strong>You own your safety. You own your data. Proxuma Lite keeps it that way.</strong></p>
+    </section>
+
+    <section id="scanner" class="page-section" style="display:none;">
+        <h1>Proxuma Scanner</h1>
+        <p class="lead">
+            Paste a link below. Analysis runs locally in your browser.
+            Proxuma does not send or store your URLs.
+        </p>
+        <div class="scanner-input-row">
+            <input
+                type="text"
+                id="scanInput"
+                placeholder="https://example.com/suspicious-link"
+                autocomplete="off"
+            />
+            <button id="scanButton" onclick="runScan()">Scan URL</button>
+        </div>
+        <div class="scanner-helper-row">
+            <button type="button" class="secondary-button" onclick="copyLastURL()">
+                Copy current URL
+            </button>
+        </div>
+        <div class="qr-section">
+            <div class="qr-header">
+                <span class="field-label">Or scan a QR code:</span>
+                <button id="qrToggleButton" class="secondary-button" onclick="toggleQrPanel()">Show QR scanner</button>
+            </div>
+            <div id="qrPanel" class="qr-panel" style="display:none;">
+                <p class="qr-note">
+                    Proxuma will use your camera directly in this browser tab to read a QR code.
+                    Video never leaves your device.
+                </p>
+                <div class="qr-layout">
+                    <div class="qr-video-block">
+                        <div class="qr-video-frame">
+                            <video id="qrVideo" autoplay playsinline></video>
+                            <div id="qrOverlay" class="qr-overlay">Align a QR code in the frame.</div>
+                        </div>
+                        <div class="qr-controls">
+                            <button id="qrStartButton" onclick="startQrScan()">Start camera</button>
+                            <button id="qrStopButton" onclick="stopQrScan()" disabled>Stop</button>
+                        </div>
+                        <p id="qrStatus" class="qr-status">QR scanner idle.</p>
+                    </div>
+                    <div class="qr-side">
+                        <label for="qrDecoded" class="field-label">Decoded link</label>
+                        <input id="qrDecoded" class="qr-input" type="text" readonly placeholder="QR link will appear here..." />
+                        <button id="qrAnalyzeButton" onclick="analyzeDecoded()" disabled>Analyze decoded link</button>
+                        <p class="qr-note small">No camera? Upload a QR image instead:</p>
+                        <input type="file" id="qrFileInput" accept="image/*" onchange="handleQrFile(this.files)" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div id="scanCard" class="scan-card scan-card-empty">
+            <p class="empty-text">Scan a URL to see the analysis here.</p>
+        </div>
+    </section>
+</main>
+
+
+<canvas id="qrCanvas" width="640" height="480" style="display:none;"></canvas>
+
+<script src="proxuma.security.js"></script>
+<script src="proxuma.ui.js"></script>
+</body>
+</html>

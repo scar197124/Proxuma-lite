@@ -1,0 +1,43 @@
+{
+  "version": "1.0",
+  "description": "Lightweight offline signature deck for Proxuma.",
+  "phishing_keywords": [
+    "secure-login",
+    "account-verify",
+    "account-update",
+    "security-check",
+    "billing-update",
+    "verify-identity",
+    "password-reset"
+  ],
+  "scam_keywords": [
+    "claim-prize",
+    "you-won",
+    "limited-offer",
+    "act-now",
+    "gift-card",
+    "lottery",
+    "urgent-action"
+  ],
+  "dangerous_extensions": [
+    ".exe",
+    ".scr",
+    ".bat",
+    ".cmd",
+    ".vbs",
+    ".js",
+    ".jar"
+  ],
+  "benign_content_extensions": [
+    ".txt",
+    ".jpg",
+    ".jpeg",
+    ".png",
+    ".gif",
+    ".pdf",
+    ".doc",
+    ".docx",
+    ".xls",
+    ".xlsx"
+  ]
+}
