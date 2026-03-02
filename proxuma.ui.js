@@ -2,6 +2,10 @@
 // Handles navigation, theme switching, and rendering of scan results.
 
 (function () {
+
+  let lastScanSource = "manual"; // manual | qr
+
+
   const scanInput = () => document.getElementById("scanInput");
   const scanCard = () => document.getElementById("scanCard");
   const themeToggleEl = () => document.getElementById("themeToggle");
@@ -28,9 +32,7 @@
       if (themeToggleEl()) themeToggleEl().checked = false;
       if (themeLabel()) themeLabel().textContent = "Light Mode";
     }
-    try {
-      localStorage.setItem("proxuma-theme", theme);
-    } catch (e) {}
+    try { localStorage.setItem("proxuma-theme", theme); } catch (e) {}
   }
 
   function initTheme() {
@@ -51,45 +53,47 @@
 
   function severityToClass(sev) {
     switch (sev) {
-      case "critical":
-        return "sev-critical";
-      case "high":
-        return "sev-high";
-      case "medium":
-        return "sev-medium";
-      default:
-        return "sev-low";
+      case "critical": return "sev-critical";
+      case "high": return "sev-high";
+      case "medium": return "sev-medium";
+      default: return "sev-low";
     }
   }
 
   function riskLevelToBadgeClass(level) {
     switch (level) {
-      case "critical":
-        return "risk-critical";
-      case "high":
-        return "risk-high";
-      case "medium":
-        return "risk-medium";
-      case "low":
-        return "risk-low";
-      default:
-        return "risk-safe";
+      case "critical": return "risk-critical";
+      case "high": return "risk-high";
+      case "medium": return "risk-medium";
+      case "low": return "risk-low";
+      default: return "risk-safe";
     }
   }
 
   function riskLevelToLabel(level) {
     switch (level) {
-      case "critical":
-        return "CRITICAL THREAT";
-      case "high":
-        return "DANGER";
-      case "medium":
-        return "CAUTION";
-      case "low":
-        return "LOW RISK";
-      default:
-        return "SAFE";
+      case "critical": return "CRITICAL THREAT";
+      case "high": return "DANGER";
+      case "medium": return "CAUTION";
+      case "low": return "LOW RISK";
+      default: return "SAFE";
     }
+  }
+
+  
+  function actionLabel(level){
+    switch(level){
+      case "critical": return "Strongly Not Recommended";
+      case "high": return "Verify Before Proceeding";
+      case "medium": return "Proceed With Caution";
+      case "low": return "Proceed With Awareness";
+      default: return "Safe to Open";
+    }
+  }
+
+  function extractPrimaryConcern(findings){
+    if(!findings || !findings.length) return "No major threat indicators detected.";
+    return findings[0];
   }
 
   function renderResult(result) {
@@ -127,105 +131,64 @@
 
     const findingsHtml = findings.length
       ? "<ul class=\"findings-list\">" +
-        findings
-          .map((msg, i) => {
-            let sev = "low";
-            if (msg.toLowerCase().includes("double extension") || msg.toLowerCase().includes("danger") || msg.toLowerCase().includes("critical")) {
-              sev = "critical";
-            } else if (msg.toLowerCase().includes("brand") || msg.toLowerCase().includes("punycode") || msg.toLowerCase().includes("impersonation")) {
-              sev = "high";
-            } else if (msg.toLowerCase().includes("suspicious") || msg.toLowerCase().includes("encoded") || msg.toLowerCase().includes("redirect")) {
-              sev = "medium";
-            }
-            const sevClass = severityToClass(sev);
-            return "<li><span class=\"severity-chip " + sevClass + "\">" + sev.toUpperCase() + "</span>" + escapeHtml(msg) + "</li>";
-          })
-          .join("") +
+        findings.map((msg) => {
+          let sev = "low";
+          const lower = String(msg || "").toLowerCase();
+          if (lower.includes("double extension") || lower.includes("danger") || lower.includes("critical")) sev = "critical";
+          else if (lower.includes("brand") || lower.includes("punycode") || lower.includes("impersonation")) sev = "high";
+          else if (lower.includes("suspicious") || lower.includes("encoded") || lower.includes("redirect")) sev = "medium";
+          const sevClass = severityToClass(sev);
+          return "<li><span class=\"severity-chip " + sevClass + "\">" + sev.toUpperCase() + "</span>" + escapeHtml(msg) + "</li>";
+        }).join("") +
         "</ul>"
       : "<p>No detailed findings available for this URL.</p>";
 
     const suggestionsHtml = suggestions.length
-      ? "<ul class=\"suggestions-list\">" +
-        suggestions.map((msg) => "<li>" + escapeHtml(msg) + "</li>").join("") +
-        "</ul>"
+      ? "<ul class=\"suggestions-list\">" + suggestions.map((msg) => "<li>" + escapeHtml(msg) + "</li>").join("") + "</ul>"
       : "";
 
     const techText =
-      "Original: " +
-      encodedOriginal +
-      "\n" +
-      "Protocol: " +
-      escapeHtml(result.protocol || "") +
-      "\n" +
-      "Hostname: " +
-      encodedHost +
-      "\n" +
-      "Path: " +
-      encodedPath +
-      "\n" +
-      "Query: " +
-      encodedSearch +
-      "\n" +
-      "TLD: " +
-      escapeHtml(result.tld || "") +
-      "\n" +
-      "Entropy: " +
-      entropy +
-      "\n" +
-      "Engine: " +
-      escapeHtml((result && result.engineLabel) || "Proxuma Security Engine – Heuristic v14.1");
+      "Original: " + encodedOriginal + "\n" +
+      "Protocol: " + escapeHtml(result.protocol || "") + "\n" +
+      "Hostname: " + encodedHost + "\n" +
+      "Path: " + encodedPath + "\n" +
+      "Query: " + encodedSearch + "\n" +
+      "TLD: " + escapeHtml(result.tld || "") + "\n" +
+      "Entropy: " + entropy + "\n" +
+      "Engine: " + escapeHtml((result && result.engineLabel) || "Proxuma Security Engine – Heuristic v14.1");
 
-    const html =
-      "<div class=\"risk-badge " +
-      badgeClass +
-      "\">" +
-      riskLabel +
-      " · " +
-      riskScore +
-      "/100</div>" +
+    
+    const primaryConcern = extractPrimaryConcern(findings);
+    const actionText = actionLabel(result.riskLevel);
+
+    const actionBanner = 
+      "<div class='action-banner action-" + result.riskLevel + "'>" +
+      actionText +
+      "<div class='primary-concern'><strong>Primary Concern:</strong> " +
+      escapeHtml(primaryConcern) +
+      "</div></div>";
+
+    const html = actionBanner +
+    
+      "<div class=\"risk-badge " + badgeClass + "\">" + riskLabel + " · " + riskScore + "/100</div>" +
       "<div class=\"heat-meter\">" +
-      '<div class=\"heat-bar-wrapper\">' +
-      '<div class=\"heat-bar-fill\" style=\"width:' +
-      riskScore +
-      '%\"></div>' +
+      "<div class=\"heat-bar-wrapper\"><div class=\"heat-bar-fill\" style=\"width:" + riskScore + "%\"></div></div>" +
+      "<div class=\"heat-meter-label\">Overall Risk Score</div>" +
       "</div>" +
-      '<div class=\"heat-meter-label\">Overall Risk Score</div>' +
+      "<p><strong>Threat Type:</strong> " + escapeHtml(threatType) + "</p>" +
+      "<p><strong>Summary:</strong> " + escapeHtml(result.summary || "") + "</p>" +
+      "<div class=\"scan-meta\">" +
+        "<div class=\"scan-meta-block\"><strong>Confidence</strong><br>" + confidence + "%</div>" +
+        "<div class=\"scan-meta-block\"><strong>Domain Risk</strong><br>" + domainRisk + "/20</div>" +
+        "<div class=\"scan-meta-block\"><strong>Protocol Risk</strong><br>" + protocolRisk + "/20</div>" +
+        "<div class=\"scan-meta-block\"><strong>Path Risk</strong><br>" + pathRisk + "/20</div>" +
+        "<div class=\"scan-meta-block\"><strong>Redirect Risk</strong><br>" + redirectRisk + "/20</div>" +
+        "<div class=\"scan-meta-block\"><strong>Encoding Risk</strong><br>" + encodingRisk + "/20</div>" +
       "</div>" +
-      "<p><strong>Threat Type:</strong> " +
-      escapeHtml(threatType) +
-      "</p>" +
-      "<p><strong>Summary:</strong> " +
-      escapeHtml(result.summary || "") +
-      "</p>" +
-      '<div class=\"scan-meta\">' +
-      '<div class=\"scan-meta-block\"><strong>Confidence</strong><br>' +
-      confidence +
-      "%</div>" +
-      '<div class=\"scan-meta-block\"><strong>Domain Risk</strong><br>' +
-      domainRisk +
-      "/20</div>" +
-      '<div class=\"scan-meta-block\"><strong>Protocol Risk</strong><br>' +
-      protocolRisk +
-      "/20</div>" +
-      '<div class=\"scan-meta-block\"><strong>Path Risk</strong><br>' +
-      pathRisk +
-      "/20</div>" +
-      '<div class=\"scan-meta-block\"><strong>Redirect Risk</strong><br>' +
-      redirectRisk +
-      "/20</div>" +
-      '<div class=\"scan-meta-block\"><strong>Encoding Risk</strong><br>' +
-      encodingRisk +
-      "/20</div>" +
-      "</div>" +
-      "<h3>Findings</h3>" +
-      findingsHtml +
-      (suggestionsHtml
-        ? "<h3>Suggestions</h3>" + suggestionsHtml
-        : "") +
-      '<div class=\"tech-toggle\" onclick=\"toggleTechDetails()\">Show technical details</div>' +
-      '<div id=\"techDetails\" class=\"tech-details\">' +
-      techText +
-      "</div>";
+      "<h3>Findings</h3>" + findingsHtml +
+      (suggestionsHtml ? "<h3>Suggestions</h3>" + suggestionsHtml : "") +
+      "<div class=\"tech-toggle\" onclick=\"toggleTechDetails()\">Show technical details</div>" +
+      "<div id=\"techDetails\" class=\"tech-details\">" + techText + "</div>";
 
     card.innerHTML = html;
   }
@@ -235,24 +198,21 @@
       .replace(/&/g, "&amp;")
       .replace(/</g, "&lt;")
       .replace(/>/g, "&gt;")
+      .replace(/\\"/g, "&quot;")
       .replace(/"/g, "&quot;");
   }
 
   window.toggleTechDetails = function toggleTechDetails() {
     const el = document.getElementById("techDetails");
     if (!el) return;
-    if (el.style.display === "block") {
-      el.style.display = "none";
-    } else {
-      el.style.display = "block";
-    }
+    el.style.display = el.style.display === "block" ? "none" : "block";
   };
 
   function runScan() {
     const inputEl = scanInput();
     if (!inputEl) return;
     const value = inputEl.value;
-    const result = window.ProxumaSecurity.analyze(value);
+    const result = window.ProxumaSecurity.analyze(value, lastScanSource);
     renderResult(result);
   }
   window.runScan = runScan;
@@ -267,19 +227,11 @@
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(text).catch(err=>console.warn("Clipboard failed:",err));
     } else {
-      try {
-        inputEl.select();
-        document.execCommand("copy");
-      } catch(e){
-        console.warn("Fallback copy failed:",e);
-      }
+      try { inputEl.select(); document.execCommand("copy"); }
+      catch(e){ console.warn("Fallback copy failed:",e); }
     }
   }
   window.copyLastURL = copyLastURL;
-
-
-
-  
 
   // ==== QR SCANNER LOGIC (Browser-local, no network) ====
   let qrScanning = false;
@@ -311,13 +263,8 @@
     if (!panel) return;
     const isHidden = panel.style.display === "none" || panel.style.display === "";
     panel.style.display = isHidden ? "block" : "none";
-    if (toggleButton) {
-      toggleButton.textContent = isHidden ? "Hide QR scanner" : "Show QR scanner";
-    }
-    if (!isHidden) {
-      // If we just hid the panel, stop camera if running.
-      stopQrScan(false);
-    }
+    if (toggleButton) toggleButton.textContent = isHidden ? "Hide QR scanner" : "Show QR scanner";
+    if (!isHidden) stopQrScan(false);
   }
 
   async function ensureBarcodeDetector() {
@@ -332,12 +279,7 @@
   async function startQrScan() {
     const { video, startButton, stopButton, overlay, decoded, analyzeButton } = getQrElements();
     if (!video) return;
-
-    if (qrScanning) {
-      updateQrStatus("Scanner already running.");
-      return;
-    }
-
+    if (qrScanning) { updateQrStatus("Scanner already running."); return; }
     const supported = await ensureBarcodeDetector();
     if (!supported) return;
 
@@ -365,9 +307,7 @@
       qrStream.getTracks().forEach((t) => t.stop());
       qrStream = null;
     }
-    if (video) {
-      video.srcObject = null;
-    }
+    if (video) video.srcObject = null;
     if (startButton) startButton.disabled = false;
     if (stopButton) stopButton.disabled = true;
     if (overlay) overlay.style.opacity = "0.4";
@@ -377,17 +317,11 @@
   async function qrScanLoop() {
     if (!qrScanning) return;
     const { video, canvas, decoded, analyzeButton } = getQrElements();
-    if (!video || !canvas || !qrDetector) {
-      qrScanning = false;
-      return;
-    }
+    if (!video || !canvas || !qrDetector) { qrScanning = false; return; }
 
     const w = video.videoWidth;
     const h = video.videoHeight;
-    if (!w || !h) {
-      requestAnimationFrame(qrScanLoop);
-      return;
-    }
+    if (!w || !h) { requestAnimationFrame(qrScanLoop); return; }
 
     canvas.width = w;
     canvas.height = h;
@@ -398,7 +332,7 @@
       const bitmap = await createImageBitmap(canvas);
       const codes = await qrDetector.detect(bitmap);
       if (codes && codes.length > 0) {
-        const value = codes[0].rawValue || codes[0].rawValue === "" ? codes[0].rawValue : "";
+        const value = (codes[0].rawValue ?? "");
         if (value) {
           stopQrScan(false);
           if (decoded) decoded.value = value;
@@ -411,9 +345,7 @@
       console.warn("QR detect error:", err);
     }
 
-    if (qrScanning) {
-      requestAnimationFrame(qrScanLoop);
-    }
+    if (qrScanning) requestAnimationFrame(qrScanLoop);
   }
 
   async function handleQrFile(files) {
@@ -447,42 +379,31 @@
         updateQrStatus("Could not read QR image.");
       }
     };
-    img.onerror = function () {
-      updateQrStatus("Could not load the selected image.");
-    };
+    img.onerror = function () { updateQrStatus("Could not load the selected image."); };
     img.src = URL.createObjectURL(file);
   }
 
   function analyzeDecoded() {
     const { decoded } = getQrElements();
-    if (!decoded || !decoded.value) {
-      updateQrStatus("No decoded URL to analyze yet.");
-      return;
-    }
+    if (!decoded || !decoded.value) { updateQrStatus("No decoded URL to analyze yet."); return; }
     const inputEl = scanInput();
-    if (inputEl) {
-      inputEl.value = decoded.value;
-    }
-    runScan();
+    if (inputEl) inputEl.value = decoded.value;
+    lastScanSource = "qr"; runScan(); lastScanSource = "manual";
   }
 
-  // Expose QR functions for inline handlers
   window.toggleQrPanel = toggleQrPanel;
   window.startQrScan = startQrScan;
   window.stopQrScan = stopQrScan;
   window.handleQrFile = handleQrFile;
   window.analyzeDecoded = analyzeDecoded;
 
-document.addEventListener("DOMContentLoaded", function () {
+  document.addEventListener("DOMContentLoaded", function () {
     initTheme();
     const inputEl = scanInput();
     if (inputEl) {
       inputEl.addEventListener("keydown", function (e) {
-        if (e.key === "Enter") {
-          runScan();
-        }
+        if (e.key === "Enter") lastScanSource = "qr"; runScan(); lastScanSource = "manual";
       });
     }
   });
-
 })();

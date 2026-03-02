@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <title>Proxuma</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Core theme first (shared across Lite / Sense / Shield) -->
+    <link rel="stylesheet" href="proxuma.theme.core.css">
+    <!-- App styles second -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="theme-light">
@@ -13,7 +16,7 @@
             <div class="logo-text">Proxuma</div>
             <div class="logo-subtitle">Lite · Offline Link Intelligence</div>
         </div>
-        
+
 <nav class="header-center">
     <div class="proxuma-row">
         <button class="core-button" onclick="window.location.href='https://scar197124.github.io/PROXUMA/'">
@@ -27,7 +30,7 @@
     </div>
 </nav>
 
-        
+
 <div class="theme-toggle">
     <label class="switch">
         <input type="checkbox" id="themeToggle" onchange="toggleTheme()">
@@ -154,14 +157,11 @@
             </div>
         </div>
 
-
-
         <div id="scanCard" class="scan-card scan-card-empty">
             <p class="empty-text">Scan a URL to see the analysis here.</p>
         </div>
     </section>
 </main>
-
 
 <canvas id="qrCanvas" width="640" height="480" style="display:none;"></canvas>
 

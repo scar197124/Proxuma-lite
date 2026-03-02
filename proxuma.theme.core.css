@@ -1,0 +1,86 @@
+/* =========================================================
+   PROXUMA THEME CORE v1
+   Shared across Proxuma Lite / Sense / Shield (light + dark)
+   ========================================================= */
+
+:root{
+  --px-bg:#ffffff;
+  --px-text:#000000;
+  --px-text-soft:#111111;
+  --px-border:#000000;
+  --px-surface:#ffffff;
+  --px-surface-soft:#fafafa;
+  --px-muted-surface:#f5f5f5;
+
+  --px-accent:#00ff66;
+  --px-accent-soft:#00ff99;
+  --px-glow:rgba(0,255,102,.35);
+}
+
+body.theme-light{
+  --px-bg:#ffffff;
+  --px-text:#000000;
+  --px-text-soft:#111111;
+  --px-border:#000000;
+  --px-surface:#ffffff;
+  --px-surface-soft:#fafafa;
+  --px-muted-surface:#f5f5f5;
+}
+
+body.theme-dark{
+  --px-bg:#050505;
+  --px-text:#e6ffe6;
+  --px-text-soft:#e6ffe6;
+  --px-border:var(--px-accent);
+  --px-surface:#050505;
+  --px-surface-soft:#050505;
+  --px-muted-surface:rgba(255,255,255,.06);
+}
+
+html,body{background:var(--px-bg);color:var(--px-text);}
+
+body.theme-light h1,
+body.theme-light h2,
+body.theme-light h3,
+body.theme-light h4,
+body.theme-light h5,
+body.theme-light h6,
+body.theme-light p,
+body.theme-light li,
+body.theme-light label,
+body.theme-light small,
+body.theme-light input,
+body.theme-light textarea,
+body.theme-light select,
+body.theme-light button,
+body.theme-light .logo-subtitle,
+body.theme-light .lead,
+body.theme-light .tech-toggle,
+body.theme-light .tech-details,
+body.theme-light .scan-meta,
+body.theme-light .scan-meta-block,
+body.theme-light .qr-note,
+body.theme-light .qr-status{
+  color:var(--px-text) !important;
+}
+
+body.theme-light .logo-subtitle,
+body.theme-light .scan-card-empty,
+body.theme-light .heat-meter-label,
+body.theme-light .qr-note,
+body.theme-light .qr-note.small,
+body.theme-light .qr-status{
+  opacity:1 !important;
+}
+
+body.theme-light .risk-badge,
+body.theme-light .risk-badge *,
+body.theme-light .severity-chip{
+  color:inherit !important;
+}
+
+body.theme-light header{border-bottom-color:var(--px-border) !important;}
+body.theme-light .page-section{border-color:var(--px-border) !important;}
+body.theme-light #scanInput{border-color:var(--px-border) !important;}
+body.theme-light .scan-card{border-color:var(--px-border) !important;}
+body.theme-light .secondary-button{border-color:var(--px-border) !important;}
