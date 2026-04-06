@@ -1,6 +1,5 @@
 # 🛡️ Proxuma Lite
 
-# 🛡️ Proxuma Lite
 
 > **A privacy-first link scanner that works without sending your data anywhere.**
 
