@@ -8,7 +8,7 @@
 
 Proxuma Lite is a lightweight, privacy-focused URL analysis tool designed to help users evaluate links safely before opening them.
 
-Unlike most tools, Proxuma Lite does **not rely on cloud processing**.
+Unlike most tools, Proxuma Lite does **not rely on cloud processing or external servers.
 
 **All analysis happens locally. Your data stays with you — always.**
 
@@ -96,7 +96,6 @@ Ideas, improvements, and feedback are welcome.
 
 ## 📌 Final Note
 
-Proxuma Lite is not about fear.  
-It’s about clarity.
+### 🧭 Built for clarity. Designed for control.
 
 **Know what you're clicking. Stay in control.**
