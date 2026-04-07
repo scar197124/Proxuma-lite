@@ -1,4 +1,13 @@
+<p align="center">
+  <img src="./logo.png" width="120"/>
+</p>
+
 # 🛡️ Proxuma Lite
+
+> **A privacy-first link scanner that works without sending your data anywhere — ever.**
+
+---
+
 <p align="center">
   <img src="./screenshot1.png" width="700"/>
 </p>
@@ -6,7 +15,6 @@
 <p align="center">
   <img src="./screenshot2.png" width="700"/>
 </p>
-> **A privacy-first link scanner that works without sending your data anywhere.**
 
 ---
 
@@ -14,7 +22,7 @@
 
 Proxuma Lite is a lightweight, privacy-focused URL analysis tool designed to help users evaluate links safely before opening them.
 
-Unlike most tools, Proxuma Lite does **not rely on cloud processing or external servers.
+Unlike most tools, Proxuma Lite does **not rely on cloud processing or external servers.**
 
 **All analysis happens locally. Your data stays with you — always.**
 
@@ -23,6 +31,7 @@ Unlike most tools, Proxuma Lite does **not rely on cloud processing or external 
 ## ⚙️ Features
 
 - 🔗 Analyze URLs safely before opening  
+- ⚡ Instant analysis (no loading, no waiting)  
 - 🚨 Detect suspicious patterns and structures  
 - 🧠 Identify potential phishing indicators  
 - 📊 Provide clear, human-readable risk explanations  
