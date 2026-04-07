@@ -1,5 +1,11 @@
 # 🛡️ Proxuma Lite
+<p align="center">
+  <img src="./screenshot1.png" width="700"/>
+</p>
 
+<p align="center">
+  <img src="./screenshot2.png" width="700"/>
+</p>
 > **A privacy-first link scanner that works without sending your data anywhere.**
 
 ---
