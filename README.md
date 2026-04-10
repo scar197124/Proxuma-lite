@@ -1,10 +1,13 @@
 <p align="center">
-  <img src="./logo.png" width="120"/>
+  <img src="./logo.png" width="140"/>
 </p>
 
 # 🛡️ Proxuma Lite
 
 > **A privacy-first link scanner that works without sending your data anywhere — ever.**
+
+⚡ Instant analysis — no loading, no waiting, no cloud.  
+🌐 **Live Demo:** https://proxima-lite.vercel.app
 
 ---
 
