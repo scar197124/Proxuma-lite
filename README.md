@@ -7,7 +7,7 @@
 > **A privacy-first link scanner that works without sending your data anywhere — ever.**
 
 ⚡ Instant analysis — no loading, no waiting, no cloud.  
-🌐 **Live Demo:** https://proxima-lite.vercel.app
+🌐 **Live Demo:** https://proxuma-lite.vercel.app
 
 ---
 
