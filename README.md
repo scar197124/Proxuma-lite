@@ -1,119 +1,72 @@
-<p align="center">
-  <img src="./logo.png" width="140"/>
-</p>
-
-# 🛡️ Proxuma Lite
-
-> **A privacy-first link scanner that works without sending your data anywhere — ever.**
-
-⚡ Instant analysis — no loading, no waiting, no cloud.  
-🌐 **Live Demo:** https://proxuma-lite.vercel.app
-
----
-
-<p align="center">
-  <img src="./screenshot1.png" width="700"/>
-</p>
-
-<p align="center">
-  <img src="./screenshot2.png" width="700"/>
-</p>
-
----
-
-## 🔍 What is Proxuma Lite?
-
-Proxuma Lite is a lightweight, privacy-focused URL analysis tool designed to help users evaluate links safely before opening them.
-
-Unlike most tools, Proxuma Lite does **not rely on cloud processing or external servers.**
-
-**All analysis happens locally. Your data stays with you — always.**
-
----
-
-## ⚙️ Features
-
-- 🔗 Analyze URLs safely before opening  
-- ⚡ Instant analysis (no loading, no waiting)  
-- 🚨 Detect suspicious patterns and structures  
-- 🧠 Identify potential phishing indicators  
-- 📊 Provide clear, human-readable risk explanations  
-- 🔒 Fully offline-first design  
-
----
-
-## 🔐 Privacy First
-
-Proxuma Lite is built on one principle:
-
-> **Your data should never leave your control.**
-
-- No automatic uploads  
-- No tracking  
-- No hidden requests  
-
----
-
-## 🚀 Quick Start
-
-1. Open the app  
-2. Paste a URL  
-3. Review the risk level and explanation  
-
----
-
-## ⚠️ Limitations
-
-To stay transparent:
-
-- Does not guarantee 100% threat detection  
-- Does not replace antivirus software  
-- Does not use live threat databases (offline-first design)  
-
----
-
-## 🧭 Why Proxuma Lite?
-
-Most link scanners:
-- Send your data to external servers  
-- Log your activity  
-- Trade privacy for convenience  
-
-Proxuma Lite does the opposite.
-
-> **Check links safely — without being tracked.**
-
----
-
-## 📚 Documentation
-
-👉 [View the Wiki](./wiki)
-
-- Scanner Logic  
-- Privacy Details  
-- Safety Signals Explained  
-- Roadmap  
-
----
-
-## 🧠 Vision
-
-Proxuma Lite is part of a larger direction:
-
-- Privacy-first security tools  
-- Transparent analysis systems  
-- User-controlled intelligence  
-
----
-
-## 🤝 Contributing
-
-Ideas, improvements, and feedback are welcome.
-
----
-
-## 📌 Final Note
-
-### 🧭 Built for clarity. Designed for control.
-
-**Know what you're clicking. Stay in control.**
+🛡️ Proxuma Lite
+A privacy-first link scanner that analyzes URLs locally — no cloud, no tracking, no data leaving your device.
+⚡ Instant analysis — zero latency
+🔒 100% local processing
+🌐 Live Demo: https://proxuma-lite.vercel.app
+<p align="center"> <img src="./logo.png" width="140"/> </p> <p align="center"> <img src="./screenshot1.png" width="700"/> </p> <p align="center"> <img src="./screenshot2.png" width="700"/> </p>
+🔍 What is Proxuma Lite?
+Proxuma Lite is a local-first URL intelligence tool that helps you evaluate links before you trust them.
+It analyzes structure, patterns, and intent signals directly in your browser —
+without sending a single byte to external servers.
+No cloud. No logs. No surveillance.
+⚙️ Core Capabilities
+🔗 Pre-click URL inspection
+⚡ Instant analysis (no delays, no API calls)
+🚨 Pattern-based threat detection
+🧠 Phishing signal recognition
+📊 Risk scoring with explanations
+🔒 Offline-first architecture
+🧪 Try It Yourself (Safe Demo)
+Paste one of these into the scanner:
+http://secure-login-paypaI.com/verify
+http://192.168.0.1/login?session=redirect
+https://google.com.secure-authentication.co/login
+🔍 What You’ll Notice
+Proxuma Lite detects:
+Lookalike domains
+IP-based URLs
+Deceptive subdomains
+Phishing keywords
+📊 How Risk Scoring Works
+Proxuma Lite evaluates multiple signals:
+Domain structure
+Obfuscation patterns
+Phishing indicators
+TLD trust level
+Each contributes to a clear, human-readable risk score.
+Not a black box — a transparent system.
+🔐 Privacy Model
+Your data never leaves your device. Period.
+No API calls
+No tracking
+No hidden requests
+Fully client-side
+⚠️ Limitations
+Not a replacement for antivirus
+No real-time threat databases
+Cannot detect all threats
+Designed to improve decision-making — not replace full security systems.
+🧭 Why Proxuma Lite Exists
+Most tools:
+Send your data away
+Log your behavior
+Trade privacy for convenience
+Proxuma Lite flips that model.
+You stay in control.
+🧱 Architecture Philosophy
+Local-first
+Transparent logic
+Lightweight + fast
+Built to evolve
+🔮 Roadmap
+Proxuma Shield (real-time protection)
+Proxuma Sense (AI-assisted explanations)
+Optional user-controlled threat feeds
+Exportable reports
+📚 Documentation
+👉 View the Wiki
+🤝 Contributing
+Ideas and improvements are welcome.
+📌 Final Note
+🧭 Built for clarity. Designed for control.
+Know what you're clicking — before it knows you.
