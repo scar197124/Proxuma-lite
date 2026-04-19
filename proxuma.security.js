@@ -1,3 +1,10 @@
+
+function isRedirectLink(hostname) {
+  try {
+    return (URL_SHORTENERS && URL_SHORTENERS.includes(hostname)) || (typeof hostname === "string" && hostname.includes("share"));
+  } catch(e) { return false; }
+}
+
 // Proxuma Security Engine – Heuristic v10.1
 // v10: structural + behavioral + contextual heuristics with guardrails and complexity checks.
 
@@ -23,7 +30,18 @@
     "rebrand.ly","lnkd.in","adf.ly"
   ];
 
-  const BRAND_PROFILES = [
+  
+// --- Trusted Domains (Proxuma v1.1) ---
+const TRUSTED_DOMAINS = ["google.com","google","gstatic.com","youtube.com","github.com","microsoft.com","apple.com"];
+function isTrustedDomain(hostname) {
+  try {
+    return TRUSTED_DOMAINS.some(domain =>
+      hostname === domain || hostname.endsWith("." + domain)
+    );
+  } catch(e) { return false; }
+}
+
+const BRAND_PROFILES = [
     "google","rbc","td","cibc","bmo","scotiabank","paypal","amazon","apple",
     "microsoft","outlook","office","facebook","instagram","whatsapp","twitter",
     "x","binance","coinbase","kraken","metamask","netflix","spotify","chase",
@@ -148,7 +166,8 @@
       const expected1 = brand + ".com";
       const expected2 = brand + ".ca";
       if (reg !== expected1 && reg !== expected2) {
-        return { brand, registered: reg, message: 'Hostname appears to impersonate the brand "' + brand + '" (' + reg + "). Possible brand impersonation / phishing." };
+        score = Math.max(0, Math.min(score, 100));
+      return { brand, registered: reg, message: 'Hostname appears to impersonate the brand "' + brand + '" (' + reg + "). Possible brand impersonation / phishing." };
       }
     }
     return null;
@@ -161,7 +180,8 @@
     for (const brand of BRAND_PROFILES) {
       const dist = levenshtein(bare, brand);
       if (dist === 1) {
-        return { brand, registered: reg, message: 'Registered domain "' + reg + '" is visually close to "' + brand + '" (possible typo-squatting / brand spoof).' };
+        score = Math.max(0, Math.min(score, 100));
+      return { brand, registered: reg, message: 'Registered domain "' + reg + '" is visually close to "' + brand + '" (possible typo-squatting / brand spoof).' };
       }
     }
     return null;
@@ -191,7 +211,8 @@
     }
 
     const changed = normalized !== input;
-    return { originalInput: input, normalizedInput: normalized, reasons, changed };
+    score = Math.max(0, Math.min(score, 100));
+      return { originalInput: input, normalizedInput: normalized, reasons, changed };
   }
 
   function analyze(urlInput, sourceContext) {
@@ -204,6 +225,7 @@
     const decodedRedirects = [];
 
     if (!urlInput || typeof urlInput !== "string" || urlInput.trim() === "") {
+      score = Math.max(0, Math.min(score, 100));
       return { ok:false, error:"Empty input.", riskLevel:"safe", riskScore:0 };
     }
 
@@ -227,7 +249,8 @@
 
     let parsed;
     try { parsed = new URL(raw); }
-    catch (e) { return { ok:false, error:"Invalid URL format even after normalization.", riskLevel:"safe", riskScore:0, original }; }
+    catch (e) { score = Math.max(0, Math.min(score, 100));
+      return { ok:false, error:"Invalid URL format even after normalization.", riskLevel:"safe", riskScore:0, original }; }
 
     const protocol = (parsed.protocol || "").replace(":", "").toLowerCase();
     const isLocalFile = protocol === "file";
@@ -462,7 +485,8 @@
     if (threatFlags.phishing && !threatFlags.credentialHarvest) threatBadges.push("Suspicious Login / Verification");
     if (threatFlags.domainObfuscation) threatBadges.push("Domain Obfuscation / Dot-Substitution");
 
-    return {
+    score = Math.max(0, Math.min(score, 100));
+      return {
       ok: true,
       original,
       protocol,
@@ -490,3 +514,84 @@
 
   global.ProxumaSecurity = { analyze };
 })(window);
+
+
+// --- Restricted link detection (Proxuma v1.1) ---
+function isRestrictedLink(url) {
+  try {
+    return /(?:share\.google|drive\.google)/i.test(url || "");
+  } catch(e) { return false; }
+}
+
+
+function getThreatLevel(score, context) {
+  try {
+    if (context && context.restricted) return "UNKNOWN";
+    if (score >= 80) return "CRITICAL";
+    if (score >= 50) return "HIGH";
+    if (score >= 25) return "MEDIUM";
+    return "LOW";
+  } catch(e) { return "LOW"; }
+}
+
+
+// --- Recommendation helper (Proxuma v1.1) ---
+function getRecommendation(level) {
+  switch(level) {
+    case "CRITICAL": return "Do NOT open this link.";
+    case "HIGH": return "Avoid unless you trust the source.";
+    case "MEDIUM": return "Proceed with caution.";
+    case "UNKNOWN": return "Only open if you trust the source.";
+    default: return "Safe to open.";
+  }
+}
+
+
+// --- Redirect Resolver (best-effort, browser-limited) ---
+async function resolveRedirect(url) {
+  try {
+    const res = await fetch(url, { method: "HEAD", redirect: "follow" });
+    return res && res.url ? res.url : null;
+  } catch (e) {
+    return null;
+  }
+}
+
+
+// --- Post-analysis hook to enrich results (Proxuma v1.1) ---
+async function proxumaEnrichResult(url, result) {
+  try {
+    const context = {};
+    if (isRestrictedLink(url)) {
+      context.restricted = true;
+      result.findings = result.findings || [];
+      result.findings.push({ level: "INFO", msg: "Content requires access. Unable to verify destination." });
+    }
+
+    const hostname = (new URL(url)).hostname;
+
+    if (isTrustedDomain(hostname)) {
+      result.findings = result.findings || [];
+      result.findings.push({ level: "INFO", msg: "Trusted platform detected, but content not verified." });
+    }
+
+    if (isRedirectLink(hostname)) {
+      result.findings = result.findings || [];
+      result.findings.push({ level: "MEDIUM", msg: "Redirect / hidden destination detected." });
+    }
+
+    const finalUrl = await resolveRedirect(url);
+    if (finalUrl && finalUrl !== url) {
+      result.resolvedUrl = finalUrl;
+      result.findings = result.findings || [];
+      result.findings.push({ level: "INFO", msg: "Resolved destination: " + finalUrl });
+    }
+
+    result.level = getThreatLevel(result.score || 0, context);
+    result.recommendation = getRecommendation(result.level);
+    result.context = context;
+    return result;
+  } catch (e) {
+    return result;
+  }
+}
