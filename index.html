@@ -33,7 +33,7 @@
 
 <div class="theme-toggle">
     <label class="switch">
-        <input type="checkbox" id="themeToggle" onchange="toggleTheme()">
+        <input id="urlInput" type="checkbox" id="themeToggle" onchange="toggleTheme()">
         <span class="slider"></span>
     </label>
 </div>
@@ -167,5 +167,42 @@
 
 <script src="proxuma.security.js"></script>
 <script src="proxuma.ui.js"></script>
+
+<script>
+async function runAnalysis() {
+  try {
+    const el = document.getElementById("urlInput");
+    const url = el ? el.value : "";
+
+    if (!url) {
+      alert("Enter a URL");
+      return;
+    }
+
+    if (typeof analyzeURL !== "function") {
+      console.error("analyzeURL not found");
+      alert("Analyzer not loaded");
+      return;
+    }
+
+    let result = analyzeURL(url);
+
+    if (typeof proxumaEnrichResult === "function") {
+      result = await proxumaEnrichResult(url, result);
+    }
+
+    if (typeof renderResult === "function") {
+      renderResult(result);
+    } else {
+      console.log("Result:", result);
+      alert(JSON.stringify(result, null, 2));
+    }
+  } catch (e) {
+    console.error(e);
+    alert("Analysis failed. Check console.");
+  }
+}
+</script>
+
 </body>
 </html>

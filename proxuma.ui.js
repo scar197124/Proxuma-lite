@@ -407,14 +407,3 @@
     }
   });
 })();
-
-// --- UI helper to display recommendation (Proxuma v1.1) ---
-function showRecommendation(result) {
-  try {
-    if (!result) return;
-    console.log("Recommendation:", result.recommendation || "");
-    if (result.resolvedUrl) {
-      console.log("Final destination:", result.resolvedUrl);
-    }
-  } catch(e) {}
-}
