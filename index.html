@@ -33,7 +33,7 @@
 
 <div class="theme-toggle">
     <label class="switch">
-        <input id="urlInput" type="checkbox" id="themeToggle" onchange="toggleTheme()">
+        <input type="checkbox" id="themeToggle" onchange="toggleTheme()">
         <span class="slider"></span>
     </label>
 </div>
@@ -117,7 +117,7 @@
                 placeholder="https://example.com/suspicious-link"
                 autocomplete="off"
             />
-            <button id="scanButton" onclick="runScan()">Scan URL</button>
+            <button id="scanButton" onclick="runAnalysis()">Scan URL</button>
         </div>
         <div class="scanner-helper-row">
             <button type="button" class="secondary-button" onclick="copyLastURL()">
@@ -165,14 +165,121 @@
 
 <canvas id="qrCanvas" width="640" height="480" style="display:none;"></canvas>
 
-<script src="proxuma.security.js"></script>
+<!-- <script src="proxuma.security.js"></script> -->
+<script src="proxuma.clean.js"></script>
 <script src="proxuma.ui.js"></script>
 
 <script>
+function proxumaVerdictLabel(verdict){
+  switch(verdict){
+    case "HIGH": return "Strongly Not Recommended";
+    case "MEDIUM": return "Proceed With Caution";
+    case "LOW": return "Low Risk";
+    case "UNKNOWN": return "Unable To Verify";
+    default: return verdict || "Unknown";
+  }
+}
+
+function proxumaPrimaryConcern(result){
+  if (!result || !result.findings || !result.findings.length) return "No major concerns detected.";
+  const priority = ["HIGH","MEDIUM","LOW","INFO"];
+  let chosen = result.findings[0];
+  for (const level of priority){
+    const found = result.findings.find(f => (f.level || "").toUpperCase() === level);
+    if (found){ chosen = found; break; }
+  }
+  return chosen.msg || "No major concerns detected.";
+}
+
+function renderResult(result){
+  const card = document.getElementById("scanCard");
+  if (!card) return;
+
+  const verdict = result.verdict || result.level || "UNKNOWN";
+  const label = proxumaVerdictLabel(verdict);
+  const concern = proxumaPrimaryConcern(result);
+  const breakdown = result.breakdown || {
+    domainRisk: 0,
+    protocolRisk: 0,
+    pathRisk: 0,
+    redirectRisk: 0,
+    encodingRisk: 0
+  };
+
+  card.className = "scan-card";
+  const score = Number(result.score || 0);
+  const confidence = Number(result.confidence || 0);
+  const summary = result.summary || "No summary available.";
+
+  const findingsHtml = (result.findings || []).map(f => {
+    const lvl = (f.level || "INFO").toUpperCase();
+    return `
+      <div class="finding finding-${lvl.toLowerCase()}">
+        <strong>${lvl}</strong> ${f.msg || ""}
+      </div>
+    `;
+  }).join("");
+
+  const detailsHtml = `
+    <details class="technical-details">
+      <summary>Show technical details</summary>
+      <div class="details-grid">
+        <div><strong>Verdict:</strong> ${verdict}</div>
+        <div><strong>Confidence:</strong> ${confidence}%</div>
+        <div><strong>Domain Risk:</strong> ${breakdown.domainRisk}/20</div>
+        <div><strong>Protocol Risk:</strong> ${breakdown.protocolRisk}/20</div>
+        <div><strong>Path Risk:</strong> ${breakdown.pathRisk}/20</div>
+        <div><strong>Redirect Risk:</strong> ${breakdown.redirectRisk}/20</div>
+        <div><strong>Encoding Risk:</strong> ${breakdown.encodingRisk}/20</div>
+      </div>
+    </details>
+  `;
+
+  card.innerHTML = `
+    <div class="verdict-banner verdict-${verdict.toLowerCase()}">${label}</div>
+    <div class="result-block">
+      <div class="primary-concern">
+        <div class="mini-label">Primary Concern</div>
+        <div>${concern}</div>
+      </div>
+
+      <div class="score-line">
+        <div class="score-head">${verdict} · ${score}/100</div>
+        <div class="score-sub">Overall Risk Score</div>
+      </div>
+
+      <div class="summary-block">
+        <div class="mini-label">Summary</div>
+        <div>${summary}</div>
+      </div>
+
+      <div class="confidence-row">
+        <div><strong>Confidence</strong></div>
+        <div>${confidence}%</div>
+      </div>
+
+      <div class="risk-grid">
+        <div><span>Domain Risk</span><strong>${breakdown.domainRisk}/20</strong></div>
+        <div><span>Protocol Risk</span><strong>${breakdown.protocolRisk}/20</strong></div>
+        <div><span>Path Risk</span><strong>${breakdown.pathRisk}/20</strong></div>
+        <div><span>Redirect Risk</span><strong>${breakdown.redirectRisk}/20</strong></div>
+        <div><span>Encoding Risk</span><strong>${breakdown.encodingRisk}/20</strong></div>
+      </div>
+
+      <div class="findings-block">
+        <div class="mini-label">Findings</div>
+        ${findingsHtml || '<div class="finding finding-info"><strong>INFO</strong> No findings.</div>'}
+      </div>
+
+      ${detailsHtml}
+    </div>
+  `;
+}
+
 async function runAnalysis() {
   try {
-    const el = document.getElementById("urlInput");
-    const url = el ? el.value : "";
+    const el = document.getElementById("scanInput");
+    const url = el ? el.value.trim() : "";
 
     if (!url) {
       alert("Enter a URL");
@@ -185,18 +292,8 @@ async function runAnalysis() {
       return;
     }
 
-    let result = analyzeURL(url);
-
-    if (typeof proxumaEnrichResult === "function") {
-      result = await proxumaEnrichResult(url, result);
-    }
-
-    if (typeof renderResult === "function") {
-      renderResult(result);
-    } else {
-      console.log("Result:", result);
-      alert(JSON.stringify(result, null, 2));
-    }
+    const result = analyzeURL(url);
+    renderResult(result);
   } catch (e) {
     console.error(e);
     alert("Analysis failed. Check console.");

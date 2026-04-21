@@ -169,3 +169,39 @@ body.theme-dark{
   background:#050505 !important;
 }
 
+
+
+/* Proxuma Lite v2 result polish */
+.verdict-banner {
+  display:inline-block;
+  padding:8px 12px;
+  border-radius:999px;
+  font-weight:700;
+  margin-bottom:14px;
+}
+.verdict-unknown { background:#5a4a00; color:#ffd85a; }
+.verdict-low { background:#10351f; color:#7ee2a8; }
+.verdict-medium { background:#4a3210; color:#f8c16d; }
+.verdict-high { background:#4a1111; color:#ff8f8f; }
+
+.result-block { display:grid; gap:14px; }
+.mini-label { font-size:.8rem; opacity:.8; text-transform:uppercase; letter-spacing:.04em; margin-bottom:4px; }
+.primary-concern, .summary-block, .findings-block, .technical-details, .confidence-row, .risk-grid {
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:12px;
+  padding:12px;
+}
+.score-line { margin:4px 0; }
+.score-head { font-size:1.25rem; font-weight:700; }
+.score-sub { opacity:.75; font-size:.92rem; }
+.confidence-row { display:flex; justify-content:space-between; align-items:center; }
+.risk-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px; }
+.risk-grid div { display:flex; justify-content:space-between; gap:8px; }
+.finding { padding:10px 12px; border-radius:10px; margin-bottom:8px; }
+.finding-low { background:rgba(120,220,160,.08); border:1px solid rgba(120,220,160,.18); }
+.finding-medium { background:rgba(248,193,109,.08); border:1px solid rgba(248,193,109,.18); }
+.finding-high { background:rgba(255,143,143,.08); border:1px solid rgba(255,143,143,.18); }
+.finding-info { background:rgba(180,180,255,.08); border:1px solid rgba(180,180,255,.18); }
+.technical-details summary { cursor:pointer; font-weight:600; }
+.details-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:8px; margin-top:10px; }
