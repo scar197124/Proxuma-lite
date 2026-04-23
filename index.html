@@ -1,305 +1,236 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Proxuma</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Core theme first (shared across Lite / Sense / Shield) -->
-    <link rel="stylesheet" href="proxuma.theme.core.css">
-    <!-- App styles second -->
-    <link rel="stylesheet" href="style.css">
-</head>
-<body class="theme-light">
-<header id="proxumaHeader">
-    <div class="header-inner">
-        <div class="logo-block">
-            <div class="logo-text">Proxuma</div>
-            <div class="logo-subtitle">Lite · Offline Link Intelligence</div>
-        </div>
 
-<nav class="header-center">
-    <div class="proxuma-row">
-        <button class="core-button" onclick="window.location.href='https://scar197124.github.io/PROXUMA/'">
-            Proxuma
-        </button>
-    </div>
-    <div class="nav-row">
-        <button onclick="showPage('home')">Home</button>
-        <button onclick="showPage('about')">About</button>
-        <button onclick="showPage('scanner')">Scanner</button>
-    </div>
-</nav>
+<!-- === CANONICAL === -->
+<link rel="canonical" href="https://yourdomain.com/" />
 
+<!-- === SEO CORE === -->
+<meta name="description" content="Proxuma Lite is a privacy-first offline link scanner that detects phishing, suspicious URLs, and hidden threats directly in your browser." />
+<meta name="keywords" content="link scanner, phishing detection, url safety checker, offline security tool, proxuma lite" />
+<meta name="author" content="Proxuma" />
 
-<div class="theme-toggle">
-    <label class="switch">
-        <input type="checkbox" id="themeToggle" onchange="toggleTheme()">
-        <span class="slider"></span>
-    </label>
-</div>
+<!-- === OPEN GRAPH === -->
+<meta property="og:title" content="Proxuma Lite — Offline Link Intelligence" />
+<meta property="og:description" content="Scan suspicious links without sending data anywhere. Privacy-first URL analysis." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://yourdomain.com/" />
+<meta property="og:image" content="https://yourdomain.com/preview.png" />
 
-    </div>
-</header>
+<!-- === TWITTER === -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Proxuma Lite — Offline Link Scanner" />
+<meta name="twitter:description" content="Detect phishing links locally. No tracking." />
+<meta name="twitter:image" content="https://yourdomain.com/preview.png" />
 
-<main>
-    <section id="home" class="page-section">
-        <h1>Welcome to Proxuma</h1>
-        <p class="lead">
-            A private, offline security tool that analyzes suspicious links
-            <strong>without sending anything to the internet.</strong>
-        </p>
-        <p>
-            Every scan happens locally on your device. Nothing is stored.
-            Nothing is shared. Nothing leaves your browser.
-        </p>
-        <ul class="feature-list">
-            <li>Detects hidden redirects and obfuscated payloads</li>
-            <li>Flags look-alike and punycode domains</li>
-            <li>Highlights phishing-style login pages</li>
-            <li>Evaluates risk across multiple categories</li>
-        </ul>
-        <p>
-            No accounts. No tracking. No cloud. Just a focused security brain
-            running entirely on your device.
-        </p>
-        <p class="cta">
-            Go to the <button class="inline-link" onclick="showPage('scanner')">Scanner</button>
-            to analyze a link now.
-        </p>
-    </section>
-
-    <section id="about" class="page-section" style="display:none;">
-        <h1>About Proxuma Lite</h1>
-        <p>
-            Proxuma Lite is a zero-cloud, zero-tracking, fully offline security scanner
-            designed for people who value both safety and privacy.
-        </p>
-        <h2>How It Works</h2>
-        <p>
-            Proxuma extracts and analyzes the structure of a URL using a local intelligence engine that includes:
-        </p>
-        <ul class="feature-list">
-            <li>Heuristic scoring and signature matching</li>
-            <li>Behavioral pattern detection and threat archetype classification</li>
-            <li>Offline reasoning logic with confidence scoring</li>
-            <li>Explainable results with human-readable summaries</li>
-        </ul>
-        <p>
-            It evaluates the domain, protocol, path, redirect behavior, encoding patterns,
-            and hidden intent signals, then produces a clear verdict such as:
-            <em>Safe, Low Risk, Medium Risk, High Risk, Dangerous, or Critical Threat.</em>
-        </p>
-        <h2>No Data Leaves Your Device</h2>
-        <p>Proxuma Lite does not:</p>
-        <ul class="feature-list">
-            <li>Send URLs to a server</li>
-            <li>Log your scans or store history</li>
-            <li>Collect identities or analytics</li>
-            <li>Build profiles or share data</li>
-        </ul>
-        <p>
-            Everything runs inside your browser, privately and quietly. Proxuma Lite gives you
-            the intelligence of a modern threat engine without the surveillance of one.
-        </p>
-        <p><strong>You own your safety. You own your data. Proxuma Lite keeps it that way.</strong></p>
-    </section>
-
-    <section id="scanner" class="page-section" style="display:none;">
-        <h1>Proxuma Scanner</h1>
-        <p class="lead">
-            Paste a link below. Analysis runs locally in your browser.
-            Proxuma does not send or store your URLs.
-        </p>
-        <div class="scanner-input-row">
-            <input
-                type="text"
-                id="scanInput"
-                placeholder="https://example.com/suspicious-link"
-                autocomplete="off"
-            />
-            <button id="scanButton" onclick="runAnalysis()">Scan URL</button>
-        </div>
-        <div class="scanner-helper-row">
-            <button type="button" class="secondary-button" onclick="copyLastURL()">
-                Copy current URL
-            </button>
-        </div>
-        <div class="qr-section">
-            <div class="qr-header">
-                <span class="field-label">Or scan a QR code:</span>
-                <button id="qrToggleButton" class="secondary-button" onclick="toggleQrPanel()">Show QR scanner</button>
-            </div>
-            <div id="qrPanel" class="qr-panel" style="display:none;">
-                <p class="qr-note">
-                    Proxuma will use your camera directly in this browser tab to read a QR code.
-                    Video never leaves your device.
-                </p>
-                <div class="qr-layout">
-                    <div class="qr-video-block">
-                        <div class="qr-video-frame">
-                            <video id="qrVideo" autoplay playsinline></video>
-                            <div id="qrOverlay" class="qr-overlay">Align a QR code in the frame.</div>
-                        </div>
-                        <div class="qr-controls">
-                            <button id="qrStartButton" onclick="startQrScan()">Start camera</button>
-                            <button id="qrStopButton" onclick="stopQrScan()" disabled>Stop</button>
-                        </div>
-                        <p id="qrStatus" class="qr-status">QR scanner idle.</p>
-                    </div>
-                    <div class="qr-side">
-                        <label for="qrDecoded" class="field-label">Decoded link</label>
-                        <input id="qrDecoded" class="qr-input" type="text" readonly placeholder="QR link will appear here..." />
-                        <button id="qrAnalyzeButton" onclick="analyzeDecoded()" disabled>Analyze decoded link</button>
-                        <p class="qr-note small">No camera? Upload a QR image instead:</p>
-                        <input type="file" id="qrFileInput" accept="image/*" onchange="handleQrFile(this.files)" />
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div id="scanCard" class="scan-card scan-card-empty">
-            <p class="empty-text">Scan a URL to see the analysis here.</p>
-        </div>
-    </section>
-</main>
-
-<canvas id="qrCanvas" width="640" height="480" style="display:none;"></canvas>
-
-<!-- <script src="proxuma.security.js"></script> -->
-<script src="proxuma.clean.js"></script>
-<script src="proxuma.ui.js"></script>
-
-<script>
-function proxumaVerdictLabel(verdict){
-  switch(verdict){
-    case "HIGH": return "Strongly Not Recommended";
-    case "MEDIUM": return "Proceed With Caution";
-    case "LOW": return "Low Risk";
-    case "UNKNOWN": return "Unable To Verify";
-    default: return verdict || "Unknown";
-  }
-}
-
-function proxumaPrimaryConcern(result){
-  if (!result || !result.findings || !result.findings.length) return "No major concerns detected.";
-  const priority = ["HIGH","MEDIUM","LOW","INFO"];
-  let chosen = result.findings[0];
-  for (const level of priority){
-    const found = result.findings.find(f => (f.level || "").toUpperCase() === level);
-    if (found){ chosen = found; break; }
-  }
-  return chosen.msg || "No major concerns detected.";
-}
-
-function renderResult(result){
-  const card = document.getElementById("scanCard");
-  if (!card) return;
-
-  const verdict = result.verdict || result.level || "UNKNOWN";
-  const label = proxumaVerdictLabel(verdict);
-  const concern = proxumaPrimaryConcern(result);
-  const breakdown = result.breakdown || {
-    domainRisk: 0,
-    protocolRisk: 0,
-    pathRisk: 0,
-    redirectRisk: 0,
-    encodingRisk: 0
-  };
-
-  card.className = "scan-card";
-  const score = Number(result.score || 0);
-  const confidence = Number(result.confidence || 0);
-  const summary = result.summary || "No summary available.";
-
-  const findingsHtml = (result.findings || []).map(f => {
-    const lvl = (f.level || "INFO").toUpperCase();
-    return `
-      <div class="finding finding-${lvl.toLowerCase()}">
-        <strong>${lvl}</strong> ${f.msg || ""}
-      </div>
-    `;
-  }).join("");
-
-  const detailsHtml = `
-    <details class="technical-details">
-      <summary>Show technical details</summary>
-      <div class="details-grid">
-        <div><strong>Verdict:</strong> ${verdict}</div>
-        <div><strong>Confidence:</strong> ${confidence}%</div>
-        <div><strong>Domain Risk:</strong> ${breakdown.domainRisk}/20</div>
-        <div><strong>Protocol Risk:</strong> ${breakdown.protocolRisk}/20</div>
-        <div><strong>Path Risk:</strong> ${breakdown.pathRisk}/20</div>
-        <div><strong>Redirect Risk:</strong> ${breakdown.redirectRisk}/20</div>
-        <div><strong>Encoding Risk:</strong> ${breakdown.encodingRisk}/20</div>
-      </div>
-    </details>
-  `;
-
-  card.innerHTML = `
-    <div class="verdict-banner verdict-${verdict.toLowerCase()}">${label}</div>
-    <div class="result-block">
-      <div class="primary-concern">
-        <div class="mini-label">Primary Concern</div>
-        <div>${concern}</div>
-      </div>
-
-      <div class="score-line">
-        <div class="score-head">${verdict} · ${score}/100</div>
-        <div class="score-sub">Overall Risk Score</div>
-      </div>
-
-      <div class="summary-block">
-        <div class="mini-label">Summary</div>
-        <div>${summary}</div>
-      </div>
-
-      <div class="confidence-row">
-        <div><strong>Confidence</strong></div>
-        <div>${confidence}%</div>
-      </div>
-
-      <div class="risk-grid">
-        <div><span>Domain Risk</span><strong>${breakdown.domainRisk}/20</strong></div>
-        <div><span>Protocol Risk</span><strong>${breakdown.protocolRisk}/20</strong></div>
-        <div><span>Path Risk</span><strong>${breakdown.pathRisk}/20</strong></div>
-        <div><span>Redirect Risk</span><strong>${breakdown.redirectRisk}/20</strong></div>
-        <div><span>Encoding Risk</span><strong>${breakdown.encodingRisk}/20</strong></div>
-      </div>
-
-      <div class="findings-block">
-        <div class="mini-label">Findings</div>
-        ${findingsHtml || '<div class="finding finding-info"><strong>INFO</strong> No findings.</div>'}
-      </div>
-
-      ${detailsHtml}
-    </div>
-  `;
-}
-
-async function runAnalysis() {
-  try {
-    const el = document.getElementById("scanInput");
-    const url = el ? el.value.trim() : "";
-
-    if (!url) {
-      alert("Enter a URL");
-      return;
-    }
-
-    if (typeof analyzeURL !== "function") {
-      console.error("analyzeURL not found");
-      alert("Analyzer not loaded");
-      return;
-    }
-
-    const result = analyzeURL(url);
-    renderResult(result);
-  } catch (e) {
-    console.error(e);
-    alert("Analysis failed. Check console.");
+<!-- === STRUCTURED DATA === -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Proxuma Lite",
+  "applicationCategory": "SecurityApplication",
+  "operatingSystem": "Web",
+  "description": "A privacy-first offline URL scanner that analyzes links for phishing and threats directly in the browser.",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
   }
 }
 </script>
 
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Proxuma Lite – Free Link Scanner & Phishing Detection Tool</title>
+  <link rel="stylesheet" href="proxuma.theme.core.css" />
+  <link rel="stylesheet" href="style.css" />
+<script src="https://unpkg.com/html5-qrcode"></script>
+</head>
+<body class="theme-dark">
+  <div class="app-shell">
+    <header id="proxumaHeader">
+      <div class="header-inner">
+        <div class="logo-block">
+          <div class="logo-text">Proxuma</div>
+          <div class="logo-subtitle">Lite · Offline Link Intelligence</div>
+        </div>
+
+        <nav class="header-center" aria-label="Primary">
+          <div class="proxuma-row">
+            <a href="https://github.com/scar197124/PROXUMA" target="_blank" rel="noopener noreferrer" class="core-button active">Proxuma</a>
+          </div>
+          <div class="nav-row">
+            <button class="nav-button active" data-page="home">Home</button>
+            <button class="nav-button" data-page="about">About</button>
+            <button class="nav-button" data-page="scanner">Scanner</button>
+          </div>
+        </nav>
+
+        <div class="theme-toggle">
+          <label class="switch" title="Toggle theme">
+            <input type="checkbox" id="themeToggle" />
+            <span class="slider"></span>
+          </label>
+        </div>
+      </div>
+    </header>
+
+    <main class="main-wrap">
+      <section id="home" class="page-section active-page">
+        <div class="hero-card glass">
+          <div class="hero-copy">
+            <p class="eyebrow">Private by design</p>
+            <h1>Scan suspicious links without sending them anywhere.</h1>
+            <p class="lead">
+              Proxuma Lite analyzes structure, obfuscation, redirect clues, phishing signals,
+              suspicious file patterns, and domain tricks directly in your browser.
+            </p>
+
+            <div class="hero-actions">
+              <button class="primary-button" data-page="scanner">Open Scanner</button>
+              <button class="secondary-button" data-page="about">Why privacy matters</button>
+            </div>
+          </div>
+
+          <div class="hero-panel glass-inner">
+            <div class="mini-stat">
+              <span class="mini-label">Mode</span>
+              <strong>Offline Analysis</strong>
+            </div>
+            <div class="mini-stat">
+              <span class="mini-label">Storage</span>
+              <strong>None</strong>
+            </div>
+            <div class="mini-stat">
+              <span class="mini-label">Output</span>
+              <strong>Explainable Verdict</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="feature-grid">
+          <article class="glass feature-card">
+            <h2><span class="highlight-green">Privacy First</span></h2>
+            <p>No accounts. No cloud lookup. No hidden logging. Your scans stay on your device.</p>
+          </article>
+          <article class="glass feature-card">
+            <h2><span class="highlight-green">Phishing Aware</span></h2>
+            <p>Flags look-alike domains, punycode, mixed scripts, login lures, and fake brand patterns.</p>
+          </article>
+          <article class="glass feature-card">
+            <h2><span class="highlight-green">Readable Results</span></h2>
+            <p>Clear verdicts, findings, risk breakdowns, and technical details when you want them.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="about" class="page-section">
+        <div class="glass section-card">
+          <h1><span class="highlight-green">About Proxuma Lite</span></h1>
+          <p class="lead">
+            Proxuma Lite is a local browser-based link analyzer designed to help you inspect URLs
+            without uploading them to a remote service.
+          </p>
+
+          <div class="two-col">
+            <div>
+              <h2><span class="highlight-green">What it checks</span></h2>
+              <ul class="feature-list">
+                <li>Protocol safety and suspicious schemes</li>
+                <li>Domain structure, spoofing, and obfuscation</li>
+                <li>Encoded or hidden redirect behavior</li>
+                <li>Login, billing, verification, and scam language</li>
+                <li>Dangerous file extensions and double-extension tricks</li>
+              </ul>
+            </div>
+            <div>
+              <h2>What it does not do</h2>
+              <ul class="feature-list">
+                <li>It does not open the URL for you</li>
+                <li>It does not contact a server to scan</li>
+                <li>It does not guarantee a link is safe</li>
+                <li>It does not store your scan history</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="privacy-banner">
+            <strong>Privacy:</strong> Proxuma Lite runs analysis locally in your browser session.
+            URLs are not sent anywhere by this app.
+          </div>
+        </div>
+      </section>
+
+      <section id="scanner" class="page-section">
+        <div class="glass section-card">
+          <div class="scanner-head">
+            <div>
+              <h1><span class="highlight-green">Scanner</span></h1>
+              <p class="lead">Paste a URL below. Analysis runs locally in your browser.</p>
+            </div>
+            <button id="sampleButton" class="secondary-button" type="button">Load sample threat</button>
+          </div>
+
+          <div class="scanner-input-row">
+            <input
+              type="text"
+              id="scanInput"
+              placeholder="https://example.com/suspicious-link"
+              autocomplete="off"
+              spellcheck="false"
+            />
+            <button id="scanButton" class="primary-button" type="button">Scan URL</button>
+          </div>
+
+          <div class="scanner-helper-row">
+<button id="qrToggleButton" class="secondary-button">Show QR Scanner</button>
+            <button id="copyCurrentButton" class="secondary-button" type="button">Copy current URL</button>
+            <span id="statusText" class="status-text">Ready.</span>
+          </div>
+
+          <div id="qrScannerWrap" style="display:none;margin-top:10px;">
+<div id="qrReader" style="width:100%;max-width:420px;"></div>
+</div>
+<div id="scanCard" class="scan-card scan-card-empty glass">
+            <p class="empty-text">Scan a URL to see the analysis here.</p>
+          </div>
+        </div>
+      </section>
+    
+<section style="margin-top:40px; opacity:0.95;">
+  <h2>Free Link Scanner & Phishing Detection Tool</h2>
+
+  <p>
+    Proxuma Lite is a <strong>free link scanner</strong> designed to detect phishing,
+    suspicious URLs, redirects, and hidden threats directly in your browser.
+    Unlike traditional tools, Proxuma runs <strong>fully offline</strong>, ensuring
+    maximum privacy and zero data tracking.
+  </p>
+
+  <p>
+    Use Proxuma to check:
+  </p>
+
+  <ul>
+    <li>Suspicious login links</li>
+    <li>Phishing emails and messages</li>
+    <li>Unknown shortened URLs</li>
+    <li>Downloads and redirect chains</li>
+  </ul>
+
+  <p>
+    Whether you're verifying a link from email, social media, or SMS,
+    Proxuma provides <strong>instant analysis</strong> with clear,
+    readable results.
+  </p>
+</section>
+
+</main>
+  </div>
+
+  <script src="proxuma.security.js"></script>
+  <script src="proxuma.clean.js"></script>
+  <script src="proxuma.ui.js"></script>
 </body>
 </html>

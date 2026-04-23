@@ -423,8 +423,8 @@
 
     if (hardCritical) { threatType = "Critical Threat URL"; intentType = "Critical Threat / Do Not Open"; summary = "Engine kill-switch triggered: this URL matches one or more high-danger patterns."; verdict = "Do not open this link. Treat it as a likely phishing or malware attempt."; }
 
-    
-    
+
+
     // === Clarity refinement for isolated structural anomaly ===
     if(threatFlags && threatFlags.domainObfuscation &&
        !threatFlags.brandImpersonation &&
