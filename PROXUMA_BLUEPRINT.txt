@@ -1,0 +1,60 @@
+PROXUMA SYSTEM BLUEPRINT v1.0
+
+CORE RULE:
+Each Proxuma tier represents a different depth of clarity, not just more features.
+
+---
+
+PROXUMA LITE (Gateway Layer)
+Purpose: Fast, everyday scanning
+- QR Scanner: YES
+- UI: Clean, accessible
+- Output: Risk score + simple explanation
+- No deep breakdowns
+- Tone: Quick clarity
+
+---
+
+PROXUMA SENSE (Clarity Layer)
+Purpose: Understanding why
+- QR Scanner: NO
+- UI: Minimal, focused
+- Output: Deep explanation, educational
+- Step-by-step reasoning
+- Tone: Calm intelligence
+
+---
+
+PROXUMA SHIELD (Deep Analysis Layer)
+Purpose: Full intelligence engine
+- QR Scanner: YES (enhanced)
+- UI: Structured, analytical
+- Output:
+  - Risk score
+  - Threat classification
+  - Confidence scoring
+  - Technical breakdown
+  - Suggestions
+- Tone: Complete system awareness
+
+---
+
+GLOBAL RULES:
+- Privacy-first always
+- No cloud dependency
+- Explain before warning
+- Never promise perfect safety
+
+---
+
+DETECTION PHILOSOPHY:
+“Does this increase clarity without reducing user control?”
+
+---
+
+USAGE:
+Attach this file to any Proxuma project.
+When analyzed, the system should:
+1. Identify which tier it is
+2. Apply the correct rules
+3. Maintain consistency across builds

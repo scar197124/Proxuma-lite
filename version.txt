@@ -1,0 +1,3 @@
+Proxuma Lite Main Stable v1.0.0
+Official base: Main UI / glass layout.
+GitHub-ready. No Shield extras.

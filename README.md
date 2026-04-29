@@ -1,135 +1,31 @@
-# 🛡️ Proxuma Lite
+# Proxuma Lite Main — Stable GitHub Release
 
-> **A privacy-first link scanner that analyzes URLs locally — no cloud, no tracking, no data leaving your device.**
+Proxuma Lite is a privacy-first offline link scanner that analyzes suspicious URLs locally in the browser.
 
-⚡ Instant analysis — zero latency  
-🔒 100% local processing  
-🌐 **Live Demo:** https://proxuma-lite.vercel.app  
+## Stable Lite rules
+- Lite is the fast gateway layer.
+- QR scanner stays in Lite.
+- Output stays simple: risk score, primary concern, findings, suggestions.
+- No deep Shield-only panels.
+- No Sense-style long explanations.
 
----
+## Features
+- Main UI / glass product layout
+- Local risk engine powered by `proxuma.security.js`
+- Risk score and explainable findings
+- QR scanner using the browser and `html5-qrcode`
+- Light / dark theme toggle
+- GitHub Pages-ready root structure
 
-<p align="center">
-  <img src="./logo.png" width="140"/>
-</p>
+## Test locally
+Open `index.html` in a browser and test:
 
-<p align="center">
-  <img src="./screenshot1.png" width="700"/>
-</p>
+```text
+https://secure-login-paypal.ru/account-verify?redirect=aHR0cHM6Ly9ldmlsLmNvbQ==
+```
 
-<p align="center">
-  <img src="./screenshot2.png" width="700"/>
-</p>
+## Deploy on GitHub Pages
+Upload all root files to your repository, then enable Pages from `main / root`.
 
----
-
-## 🔍 What is Proxuma Lite?
-
-**Proxuma Lite is a local-first URL intelligence tool** that helps you evaluate links **before you trust them.**
-
-It analyzes structure, patterns, and intent signals directly in your browser —  
-without sending a single byte to external servers.
-
-> No cloud. No logs. No surveillance.
-
----
-
-## ⚙️ Core Capabilities
-
-- Pre-click URL inspection  
-- Instant analysis (no delays, no API calls)  
-- Pattern-based threat detection  
-- Phishing signal recognition  
-- Risk scoring with explanations  
-- Offline-first architecture  
-
----
-
-## 🧪 Try It Yourself (Safe Demo)
-
-Example URLs to test:
-
-- http://secure-login-paypaI.com/verify  
-- http://192.168.0.1/login?session=redirect  
-- https://google.com.secure-authentication.co/login  
-
----
-
-## 📊 How Risk Scoring Works
-
-Proxuma Lite evaluates:
-
-- Domain structure  
-- Obfuscation patterns  
-- Phishing indicators  
-- TLD trust level  
-
-Each contributes to a clear, human-readable risk score.
-
----
-
-## 🔐 Privacy Model
-
-> Your data never leaves your device. Period.
-
-- No API calls  
-- No tracking  
-- No hidden requests  
-- Fully client-side  
-
----
-
-## ⚠️ Limitations
-
-- Not a replacement for antivirus  
-- No real-time threat databases  
-- Cannot detect all threats  
-
----
-
-## 🧭 Why Proxuma Lite Exists
-
-Most tools send your data away and log behavior.
-
-**Proxuma Lite flips that model.**
-
-> You stay in control.
-
----
-
-## 🧱 Architecture Philosophy
-
-- Local-first  
-- Transparent logic  
-- Lightweight and fast  
-- Built to evolve  
-
----
-
-## 🔮 Roadmap
-
-- Proxuma Shield (real-time protection)  
-- Proxuma Sense (AI-assisted explanations)  
-- Optional user-controlled threat feeds  
-- Exportable reports  
-
----
-
-## 📚 Documentation
-
-👉 [View the Wiki](./wiki)
-
----
-
-## 🤝 Contributing
-
-Ideas and improvements are welcome.
-
----
-
-## 📌 Final Note
-
-### 🧭 Built for clarity. Designed for control.
-
-> Know what you're clicking — before it knows you.
-
----
+## Privacy
+No link is uploaded by the scanner. Analysis runs locally in the browser. QR camera access, when used, stays inside the browser tab.
