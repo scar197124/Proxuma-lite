@@ -260,3 +260,26 @@ body.theme-light #qrScannerWrap{background:rgba(0,0,0,.025);border-color:rgba(0,
 body.theme-dark .scan-card{background:rgba(0,0,0,.28);}
 .seo-section{max-width:960px;margin:34px auto 0;opacity:.95;}
 @media (max-width:800px){.hero-card,.two-col{grid-template-columns:1fr}.feature-grid{grid-template-columns:1fr}.scanner-input-row{flex-direction:column}.primary-button,#scanButton{width:100%}.hero-card{padding:22px}.main-wrap{padding-inline:12px}}
+
+.input-wrap{position:relative;flex:1;min-width:260px}
+.input-wrap #scanInput{width:100%;padding-right:44px}
+.input-clear-btn{
+ position:absolute;right:10px;top:50%;transform:translateY(-50%);
+ border:none;background:transparent;cursor:pointer;font-size:16px;
+ color:inherit;opacity:.7;
+}
+.sample-chip-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.sample-chip{
+ border:1px solid rgba(0,255,102,.35);background:transparent;
+ color:inherit;padding:8px 12px;border-radius:999px;cursor:pointer;font-size:.82rem;
+}
+.sample-chip:hover{transform:translateY(-1px)}
+
+.safe-chip{
+  border:1px solid rgba(0,255,102,.5);
+  box-shadow:0 0 8px rgba(0,255,102,.2);
+}
+.caution-chip{
+  border:1px solid rgba(255,196,0,.5);
+  box-shadow:0 0 8px rgba(255,196,0,.15);
+}

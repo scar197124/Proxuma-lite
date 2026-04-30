@@ -174,17 +174,31 @@
               <p class="lead">Paste a URL below. Analysis runs locally in your browser.</p>
               <div class="offline-indicator" role="status" aria-live="polite"><span class="offline-dot"></span>Inspection without exposure · No scan data transmitted</div>
             </div>
-            <button id="sampleButton" class="secondary-button" type="button">Load sample threat</button>
+            
+    <div class="sample-threats-wrap">
+      <div class="mini-label">Try Example Threats</div>
+      
+<div class="sample-chip-row">
+<button class="sample-chip safe-chip" data-sample="https://www.rbcroyalbank.com">Safe Example</button>
+<button class="sample-chip caution-chip" data-sample="https://secure-update-account.com/login-help">Caution Example</button>
+<button class="sample-chip" data-sample="https://secure-login-paypal.ru/account-verify?redirect=aHR0cHM6Ly9ldmlsLmNvbQ==">Phishing Redirect</button>
+<button class="sample-chip" data-sample="https://bit.ly/free-prize-claim">URL Shortener</button>
+<button class="sample-chip" data-sample="http://185.22.91.14/update-login">Raw IP Attack</button>
+<button class="sample-chip" data-sample="https://xn--pple-43d.com/login">Punycode Attack</button>
+</div>
+</div>
+
+    
           </div>
 
           <div class="scanner-input-row">
-            <input
+            <div class="input-wrap"><input
               type="text"
               id="scanInput"
               placeholder="https://example.com/suspicious-link"
               autocomplete="off"
               spellcheck="false"
-            />
+            /><button id="clearInputButton" class="input-clear-btn" type="button">✕</button></div>
             <button id="scanButton" class="primary-button" type="button">Analyze Link</button>
           </div>
 
@@ -237,5 +251,27 @@
   <script src="proxuma.security.js"></script>
   <script src="proxuma.clean.js"></script>
   <script src="proxuma.ui.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded",()=>{
+  const input=document.getElementById("scanInput");
+  const clearBtn=document.getElementById("clearInputButton");
+  document.querySelectorAll(".sample-chip").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      input.value=btn.dataset.sample;
+      input.focus();
+      const status=document.getElementById("statusText");
+      if(status){status.textContent="Loaded: "+btn.textContent+" example";}
+    });
+  });
+  clearBtn?.addEventListener("click",()=>{
+    input.value="";
+    input.focus();
+    const card=document.getElementById("scanCard");
+    if(card){card.innerHTML='<p class="empty-text">Analyze a URL to reveal risk score, signals, and simple next steps.</p>';}
+  });
+});
+</script>
+
 </body>
 </html>
